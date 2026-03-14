@@ -1,49 +1,52 @@
 <script lang="ts">
 	import { fade, fly } from 'svelte/transition';
 	import { cn } from '$lib/utils';
-	import Camera from 'lucide-svelte/icons/camera';
-	import Video from 'lucide-svelte/icons/video';
+	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
+	import Clapperboard from 'lucide-svelte/icons/clapperboard';
+	import Package from 'lucide-svelte/icons/package';
+	import Zap from 'lucide-svelte/icons/zap';
 	import Mic from 'lucide-svelte/icons/mic';
 	import Megaphone from 'lucide-svelte/icons/megaphone';
-	import Monitor from 'lucide-svelte/icons/monitor';
-	import PenTool from 'lucide-svelte/icons/pen-tool';
+	import ArrowRight from 'lucide-svelte/icons/arrow-right';
+	import { Button } from '$lib/components/ui/button';
 
 	const services = [
 		{
+			title: 'Event Organizer',
+			description: 'Jasa event organizer dengan pengalaman lebih dari 12 tahun.',
+			icon: CalendarCheck,
+			color: 'bg-rose-600 text-white'
+		},
+		{
 			title: 'Event Production',
-			description: 'End-to-end management for premium corporate events and conferences.',
-			icon: Video,
-			color: 'bg-red-500/10 text-red-500'
+			description: 'Divisi produksi event dari redline communication,',
+			icon: Clapperboard,
+			color: 'bg-rose-600 text-white'
 		},
 		{
-			title: 'Broadcasting',
-			description: 'High-quality live streaming and broadcast solutions for any scale.',
-			icon: Camera,
-			color: 'bg-blue-500/10 text-blue-500'
+			title: 'Equipment Rental',
+			description: 'Kami juga menyediakan rental alat dan perlengkuntuk keperluan event anda.',
+			icon: Package,
+			color: 'bg-rose-600 text-white'
 		},
 		{
-			title: 'Creative Studio',
-			description: 'Stunning visual content and branding that tells your unique story.',
-			icon: PenTool,
-			color: 'bg-purple-500/10 text-purple-500'
+			title: 'Brand Activation',
+			description: 'Ayo jangkau target konsumen anda, dengan program aktvasi dari kami.',
+			icon: Zap,
+			color: 'bg-rose-600 text-white'
 		},
 		{
-			title: 'Audio Systems',
-			description: 'Professional sound engineering for crystal clear communication.',
+			title: 'Show Management',
+			description: 'Sit back and relax, anda hanya perlu menikmati pertunjukan yang kami sediakan.',
 			icon: Mic,
-			color: 'bg-orange-500/10 text-orange-500'
+			color: 'bg-rose-600 text-white'
 		},
 		{
-			title: 'Digital Marketing',
-			description: 'Strategic campaigns that amplify your message across all channels.',
+			title: 'Advertising',
+			description:
+				'Biarkan kami meningkatkan upaya periklanan Anda dan melihat bisnis Anda berkembang.',
 			icon: Megaphone,
-			color: 'bg-green-500/10 text-green-500'
-		},
-		{
-			title: 'Visual Display',
-			description: 'Interactive LED and projection systems for immersive experiences.',
-			icon: Monitor,
-			color: 'bg-cyan-500/10 text-cyan-500'
+			color: 'bg-rose-600 text-white'
 		}
 	];
 </script>
@@ -51,17 +54,20 @@
 <section id="services" class="relative py-24 sm:py-32">
 	<div class="container mx-auto px-4">
 		<div class="mb-16 text-center">
-			<h2 class="text-sm font-bold tracking-widest text-primary uppercase">Our Expertise</h2>
-			<p class="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-				Comprehensive Solutions for <br class="hidden sm:block" />
-				<span class="text-primary">Impactful</span> Communication
+			<p class="pb-4 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
+				How Can We Help You?
 			</p>
+			<h2 class="text-base font-semibold tracking-widest text-black">
+				Selain sebagai EO Padang, Redline menyediakan jasa untuk produksi event<br />
+				anda, mulai dari skala kecil hingga besar.
+			</h2>
 		</div>
 
-		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
 			{#each services as service, i}
 				<div
-					class="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 dark:border-white/5 dark:bg-black/20 dark:hover:bg-black/40"
+					class="group relative overflow-hidden rounded-3xl border border-rose-700 bg-white/5 p-4 transition-all duration-500 hover:-translate-y-2 hover:bg-white/10 sm:p-8 dark:border-white/5 dark:bg-black/20 dark:hover:bg-black/40"
+					style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
 				>
 					<!-- Icon Background Glow -->
 					<div
@@ -71,21 +77,25 @@
 						)}
 					></div>
 
-					<div class={cn('mb-6 inline-flex rounded-2xl p-4', service.color)}>
-						<service.icon class="h-8 w-8" />
+					<div class={cn('mb-4 inline-flex rounded-2xl p-3 sm:mb-6 sm:p-4', service.color)}>
+						<service.icon class="h-6 w-6 sm:h-8 sm:w-8" />
 					</div>
 
-					<h3 class="mb-3 text-2xl font-bold">{service.title}</h3>
-					<p class="text-muted-foreground leading-relaxed">
+					<h3 class="mb-2 text-lg font-bold sm:mb-3 sm:text-2xl">{service.title}</h3>
+					<p class="text-xs leading-relaxed text-muted-foreground sm:text-base">
 						{service.description}
 					</p>
-
-					<div class="mt-6 flex items-center text-sm font-semibold text-primary transition-all group-hover:gap-2">
-						Learn More 
-						<span class="opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">→</span>
-					</div>
 				</div>
 			{/each}
+		</div>
+		<div class="mt-12 flex justify-center">
+			<Button
+				variant="outline"
+				class="group gap-2 rounded-full border-white bg-primary px-8 py-6 text-lg font-bold transition-all duration-300 text-white hover:text-black "
+				style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
+			>
+				More Services
+			</Button>
 		</div>
 	</div>
 </section>
