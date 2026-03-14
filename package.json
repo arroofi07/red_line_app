@@ -16,12 +16,13 @@
 		"test": "npm run test:unit -- --run"
 	},
 	"devDependencies": {
-		"@lucide/svelte": "^0.577.0",
+		"@internationalized/date": "^3.10.0",
 		"@sveltejs/adapter-vercel": "^6.3.1",
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@tailwindcss/vite": "^4.1.18",
 		"@vitest/browser-playwright": "^4.1.0",
+		"bits-ui": "^2.14.4",
 		"clsx": "^2.1.1",
 		"playwright": "^1.58.2",
 		"prettier": "^3.8.1",
@@ -37,5 +38,8 @@
 		"vite": "^7.3.1",
 		"vitest": "^4.1.0",
 		"vitest-browser-svelte": "^2.0.2"
+	},
+	"dependencies": {
+		"lucide-svelte": "^0.577.0"
 	}
 }
