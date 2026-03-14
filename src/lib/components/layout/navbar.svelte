@@ -119,7 +119,7 @@
 				'transition-all duration-500 ease-in-out',
 				isScrolled
 					? 'max-w-4xl mx-auto rounded-full border border-white/10 bg-white/5 px-6 py-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:border-white/5 dark:bg-black/20'
-					: 'max-w-7xl mx-auto border-y border-border/10 bg-background/50 px-6 py-3 backdrop-blur-md'
+					: 'max-w-7xl mx-auto border-y border-border/10 bg-background/50 px-6 py-3 backdrop-blur-md rounded-3xl'
 			)}
 		>
 			<nav class="flex items-center justify-between">
