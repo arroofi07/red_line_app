@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>Red Line Communication | Connecting Every Line</title>
+	<title>EO PADANG | redline communication</title>
 	<meta
 		name="description"
 		content="Premium production and event services tailored for your unique vision."
