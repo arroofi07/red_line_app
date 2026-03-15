@@ -116,13 +116,11 @@
 
 	<div class="section-inner">
 		<!-- Top row: label + counter -->
-		<div class="top-bar">
-			<div class="w-full items-center justify-center text-center">
-				<span class="label-line"></span>
-				<span class="text-3xl font-semibold text-primary">Latest Event</span>
-			</div>
+		<div class="section-header">
+			<h2 class="section-title">
+				Latest <em>Event</em>
+			</h2>
 		</div>
-
 		<!-- Main grid -->
 		<div class="main-grid">
 			<!-- Left: Text content -->
@@ -755,5 +753,27 @@
 			color: #111;
 			backdrop-filter: blur(6px);
 		}
+	}
+
+	.section-header {
+		max-width: 680px;
+		margin: 0 auto 4rem;
+		text-align: center;
+		transform: translateY(32px);
+		transition:
+			opacity 0.7s ease,
+			transform 0.7s ease;
+	}
+	.section-title {
+		font-size: clamp(2.4rem, 5vw, 3.8rem);
+		font-weight: 400;
+		color: var(--ink);
+		line-height: 1.1;
+		margin: 0 0 1.2rem;
+		letter-spacing: -0.02em;
+	}
+	.section-title em {
+		font-style: italic;
+		color: var(--red);
 	}
 </style>
