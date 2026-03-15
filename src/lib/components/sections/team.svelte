@@ -232,7 +232,7 @@
 		font-family: 'Helvetica Neue', Arial, sans-serif;
 		font-size: 1rem;
 		line-height: 1.7;
-		color: var(--muted);
+		color: black;
 		margin: 0;
 	}
 
