@@ -14,7 +14,7 @@
 			description:
 				'An immersive experience for global leaders to connect and innovate in the heart of the tech world.',
 			image:
-				'https://images.unsplash.com/photo-1540575861501-7ad060e39fe5?auto=format&fit=crop&w=1200&q=90',
+				'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=90',
 			accent: '#C9A96E',
 			tag: '01'
 		},
