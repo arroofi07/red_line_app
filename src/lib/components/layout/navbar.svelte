@@ -84,18 +84,18 @@
 >
 	<div class="container mx-auto">
 		<!-- Top Bar -->
-		<div 
+		<div
 			class={cn(
-				'flex items-center justify-between gap-6 px-6 py-2 transition-all duration-500 overflow-hidden',
-				isScrolled ? 'h-0 opacity-0 py-0' : 'h-10 opacity-100'
+				'flex items-center justify-between gap-6 overflow-hidden px-6 py-2 transition-all duration-500',
+				isScrolled ? 'h-0 py-0 opacity-0' : 'h-10 opacity-100'
 			)}
 		>
 			<div class="flex items-center gap-4">
-				<a 
-					href="#contact" 
-					class="text-xs font-bold text-primary hover:text-primary/80 transition-colors uppercase tracking-wider"
+				<a
+					href="#contact"
+					class="text-xs font-bold tracking-wider text-primary transition-colors hover:text-primary/80"
 				>
-					Bikin Event #diRedlineAja
+					<span class="uppercase"> Bikin Event </span> #diRedlineAja
 				</a>
 			</div>
 			<div class="flex items-center gap-6">
@@ -104,7 +104,7 @@
 						href={social.href}
 						target="_blank"
 						rel="noopener noreferrer"
-						class="text-xs font-semibold text-foreground/50 transition-colors hover:text-primary flex items-center gap-1.5"
+						class="flex items-center gap-1.5 text-xs font-semibold text-foreground/50 transition-colors hover:text-primary"
 						aria-label={social.name}
 					>
 						<social.icon class="h-3.5 w-3.5" />
@@ -118,8 +118,8 @@
 			class={cn(
 				'transition-all duration-500 ease-in-out',
 				isScrolled
-					? 'max-w-4xl mx-auto rounded-full border border-white/10 bg-white/5 px-6 py-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:border-white/5 dark:bg-black/20'
-					: 'max-w-7xl mx-auto border-y border-border/10 bg-background/50 px-6 py-3 backdrop-blur-md rounded-3xl'
+					? 'mx-auto max-w-4xl rounded-full border border-white/10 bg-white/5 px-6 py-2 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] backdrop-blur-2xl dark:border-white/5 dark:bg-black/20'
+					: 'mx-auto max-w-7xl rounded-3xl border-y border-border/10 bg-background/50 px-6 py-3 backdrop-blur-md'
 			)}
 		>
 			<nav class="flex items-center justify-between">
@@ -143,7 +143,9 @@
 								href={link.href}
 								class={cn(
 									'relative px-4 py-2 text-sm font-medium transition-all duration-300 focus-visible:outline-hidden',
-									activeSection === link.id ? 'text-primary' : 'text-foreground/70 hover:text-primary'
+									activeSection === link.id
+										? 'text-primary'
+										: 'text-foreground/70 hover:text-primary'
 								)}
 							>
 								{link.name}
@@ -212,12 +214,12 @@
 								<div class="flex items-center justify-center py-4">
 									<img src={logoNav} alt="Red Line Logo" class="h-14 w-auto drop-shadow-sm" />
 								</div>
-								
+
 								<div class="text-center">
-									<a 
-										href="#contact" 
+									<a
+										href="#contact"
 										onclick={closeMobileMenu}
-										class="text-sm font-bold text-primary uppercase tracking-widest"
+										class="text-sm font-bold tracking-widest text-primary uppercase"
 									>
 										Bikin Event #diRedlineAja
 									</a>

@@ -3,6 +3,7 @@
 	import Services from '$lib/components/sections/services.svelte';
 	import Event from '$lib/components/sections/event.svelte';
 	import Mitra from '$lib/components/sections/mitra.svelte';
+	import Team from '$lib/components/sections/team.svelte';
 </script>
 
 <svelte:head>
@@ -17,5 +18,6 @@
 	<Hero />
 	<Services />
 	<Event />
+	<Team />
 	<Mitra />
 </main>
