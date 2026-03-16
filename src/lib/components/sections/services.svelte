@@ -1,16 +1,20 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { cn } from '$lib/utils';
 	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
 	import Clapperboard from 'lucide-svelte/icons/clapperboard';
 	import Package from 'lucide-svelte/icons/package';
 	import Zap from 'lucide-svelte/icons/zap';
 	import Mic from 'lucide-svelte/icons/mic';
 	import Megaphone from 'lucide-svelte/icons/megaphone';
-	import ArrowRight from 'lucide-svelte/icons/arrow-right';
-	import { Button } from '$lib/components/ui/button';
 
-	const services = [
+	let mounted = $state(false);
+
+	onMount(() => {
+		mounted = true;
+	});
+
+	const features = [
 		{
 			title: 'Event Organizer',
 			description: 'Jasa event organizer dengan pengalaman lebih dari 12 years.',
@@ -18,17 +22,17 @@
 		},
 		{
 			title: 'Event Production',
-			description: 'Divisi produksi event dari redline communication,',
+			description: 'Divisi produksi event dari redline communication.',
 			icon: Clapperboard
 		},
 		{
 			title: 'Equipment Rental',
-			description: 'Kami juga menyediakan rental alat dan perlengkuntuk keperluan event anda.',
+			description: 'Kami juga menyediakan rental alat dan perlengkapan untuk keperluan event anda.',
 			icon: Package
 		},
 		{
 			title: 'Brand Activation',
-			description: 'Ayo jangkau target konsumen anda, dengan program aktvasi dari kami.',
+			description: 'Ayo jangkau target konsumen anda, dengan program aktivasi dari kami.',
 			icon: Zap
 		},
 		{
@@ -45,60 +49,45 @@
 	];
 </script>
 
-<section id="services" class="relative py-24 sm:py-32 bg-background">
-	<div class="container mx-auto px-4">
-		<div class="mb-16 text-center">
-			<p class="pb-4 text-4xl font-extrabold tracking-tight text-primary sm:text-5xl">
-				How Can We Help You?
-			</p>
-			<h2 class="text-base font-semibold tracking-widest text-foreground/80">
-				Selain sebagai EO Padang, Redline menyediakan jasa untuk produksi event<br />
-				anda, mulai dari skala kecil hingga besar.
-			</h2>
-		</div>
-
-		<div class="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-3">
-			{#each services as service, i}
-				<div
-					class="group relative overflow-hidden rounded-3xl border border-primary/20 bg-card p-4 transition-all duration-500 hover:-translate-y-2 hover:bg-primary/5 sm:p-8 dark:border-white/5"
-					style="box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);"
-				>
-					<!-- Icon Background Glow -->
-					<div
-						class="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-primary opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-20"
-					></div>
-
-					<div class="mb-4 inline-flex rounded-2xl p-3 sm:mb-6 sm:p-4 bg-primary text-primary-foreground">
-						<service.icon class="h-6 w-6 sm:h-8 sm:w-8" />
-					</div>
-
-					<h3 class="mb-2 text-lg font-bold sm:mb-3 sm:text-2xl text-card-foreground">{service.title}</h3>
-					<p class="text-xs leading-relaxed text-muted-foreground sm:text-base">
-						{service.description}
+<section id="services" class="relative overflow-hidden py-24">
+	<div class="container mx-auto px-4 md:px-6">
+		<div class="flex flex-col gap-16">
+			<!-- Header -->
+			<div class="flex flex-col items-center text-center gap-4">
+				{#if mounted}
+					<h2 in:fly={{ y: 20, duration: 1000 }} class="font-display text-4xl leading-tight tracking-tight text-white md:text-6xl uppercase">
+						Our <span class="text-primary">Services</span>
+					</h2>
+					<p in:fly={{ y: 20, duration: 1000, delay: 200 }} class="max-w-2xl text-lg text-foreground/60">
+						One stop solution for all your event needs and strategic communication.
 					</p>
-				</div>
-			{/each}
-		</div>
-		<div class="mt-12 flex justify-center">
-			<Button
-				variant="default"
-				class="group gap-2 rounded-full px-8 py-6 text-lg font-bold transition-all duration-300 shadow-lg shadow-primary/20"
-			>
-				More Services
-			</Button>
+				{/if}
+			</div>
+
+			<!-- Features Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				{#each features as feature, i}
+					{#if mounted}
+						<div in:fade={{ duration: 1000, delay: i * 200 }} class="group relative flex flex-col items-center text-center p-8 rounded-[40px] border border-white/5 bg-black/40 backdrop-blur-xl transition-all duration-500 hover:border-primary/30 hover:bg-primary/5">
+							<!-- Icon Container (Hexagonal) -->
+							<div class="relative mb-6 flex h-20 w-20 items-center justify-center">
+								<div class="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+								<div class="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-white shadow-lg shadow-primary/20 transform rotate-12 transition-transform group-hover:rotate-0">
+									<feature.icon class="h-8 w-8 -rotate-12 transition-transform group-hover:rotate-0" />
+								</div>
+							</div>
+
+							<h3 class="font-display text-2xl text-white mb-4">{feature.title}</h3>
+							<p class="text-foreground/40 text-sm leading-relaxed">
+								{feature.description}
+							</p>
+							
+							<!-- Bottom Glow Line -->
+							<div class="absolute bottom-10 w-12 h-1 bg-primary rounded-full opacity-30 group-hover:opacity-100 transition-opacity"></div>
+						</div>
+					{/if}
+				{/each}
+			</div>
 		</div>
 	</div>
 </section>
-
-<style>
-	/* Subtle pattern for section depth */
-	#services::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(circle at 2px 2px, var(--primary) 1px, transparent 0);
-		background-size: 40px 40px;
-		opacity: 0.05;
-		pointer-events: none;
-	}
-</style>
