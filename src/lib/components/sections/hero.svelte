@@ -65,7 +65,7 @@
 								<span class="star-icon">
 									<svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 										<circle cx="20" cy="20" r="20" fill="white"/>
-										<path d="M20 6 L21.8 18.2 L34 20 L21.8 21.8 L20 34 L18.2 21.8 L6 20 L18.2 18.2 Z" fill="#FF5C00"/>
+										<path d="M20 6 L21.8 18.2 L34 20 L21.8 21.8 L20 34 L18.2 21.8 L6 20 L18.2 18.2 Z" fill="var(--color-primary)"/>
 									</svg>
 								</span>
 								Event
@@ -129,8 +129,8 @@
 							<div class="relative z-10 w-full h-[420px] lg:h-[500px] overflow-hidden">
 
 								<!-- Ambient light glow behind figure -->
-								<div class="figure-glow-orange"></div>
-								<div class="figure-glow-blue"></div>
+								<div class="figure-glow-red"></div>
+								<div class="figure-glow-red-secondary"></div>
 
 								<!-- Hero Illustration -->
 								<img
@@ -212,7 +212,6 @@
 
 	/* ── CSS vars ── */
 	:root {
-		--primary: #FF5C00;
 		--bg-deep: #060B18;
 	}
 
@@ -224,8 +223,8 @@
 
 	/* ── Background gradient ── */
 	.bg-hero-gradient {
-		background: radial-gradient(ellipse 80% 60% at 60% 20%, #0D1B3E 0%, #060B18 60%),
-		            radial-gradient(ellipse 50% 50% at 20% 80%, #0A1628 0%, transparent 70%);
+		background: radial-gradient(ellipse 80% 60% at 60% 20%, oklch(0.15 0.05 25 / 30%) 0%, #060B18 60%),
+		            radial-gradient(ellipse 50% 50% at 20% 80%, oklch(0.15 0.05 25 / 15%) 0%, transparent 70%);
 	}
 
 	/* ── Blobs ── */
@@ -239,17 +238,17 @@
 	.blob-1 {
 		width: 500px; height: 500px;
 		top: -10%; left: 10%;
-		background: rgba(255, 92, 0, 0.06);
+		background: oklch(0.55 0.22 25.26 / 8%);
 	}
 	.blob-2 {
 		width: 600px; height: 400px;
 		bottom: 10%; right: -5%;
-		background: rgba(20, 60, 140, 0.25);
+		background: oklch(0.55 0.22 25.26 / 12%);
 	}
 	.blob-3 {
 		width: 300px; height: 300px;
 		top: 40%; left: 40%;
-		background: rgba(255, 92, 0, 0.04);
+		background: oklch(0.55 0.22 25.26 / 5%);
 	}
 
 	/* ── Grid overlay ── */
@@ -289,7 +288,7 @@
 
 	/* ── CTA glow shadow ── */
 	.shadow-glow {
-		box-shadow: 0 0 30px rgba(255, 92, 0, 0.35), 0 8px 24px rgba(255, 92, 0, 0.2);
+		box-shadow: 0 0 30px oklch(0.55 0.22 25.26 / 40%), 0 8px 24px oklch(0.55 0.22 25.26 / 20%);
 	}
 
 	/* ── Visual card ── */
@@ -298,7 +297,7 @@
 		backdrop-filter: blur(10px);
 	}
 	.bg-card-gradient {
-		background: radial-gradient(ellipse at 50% 30%, rgba(13, 40, 100, 0.6) 0%, rgba(6, 11, 24, 0.8) 70%);
+		background: radial-gradient(ellipse at 50% 30%, oklch(0.15 0.05 25 / 50%) 0%, rgba(6, 11, 24, 0.8) 70%);
 	}
 
 	/* ── Hero Character Illustration ── */
@@ -308,22 +307,22 @@
 		object-fit: contain;
 		display: block;
 	}
-	.figure-glow-orange {
+	.figure-glow-red {
 		position: absolute;
 		left: -10%; top: 20%;
 		width: 55%; height: 60%;
 		border-radius: 9999px;
-		background: radial-gradient(circle, rgba(255,92,0,0.25) 0%, transparent 70%);
+		background: radial-gradient(circle, oklch(0.55 0.22 25.26 / 30%) 0%, transparent 70%);
 		filter: blur(40px);
 		z-index: 1;
 		pointer-events: none;
 	}
-	.figure-glow-blue {
+	.figure-glow-red-secondary {
 		position: absolute;
 		right: -5%; top: 10%;
 		width: 60%; height: 70%;
 		border-radius: 9999px;
-		background: radial-gradient(circle, rgba(26,74,255,0.2) 0%, transparent 70%);
+		background: radial-gradient(circle, oklch(0.55 0.22 25.26 / 20%) 0%, transparent 70%);
 		filter: blur(50px);
 		z-index: 1;
 		pointer-events: none;
