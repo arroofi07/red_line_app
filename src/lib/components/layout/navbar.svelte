@@ -79,14 +79,14 @@
 <header
 	class={cn(
 		'fixed top-0 z-40 w-full transition-all duration-500 ease-in-out',
-		isScrolled ? 'px-4 py-2 md:px-6' : 'px-0 py-0'
+		isScrolled ? 'px-2 py-2 sm:px-4 md:px-6' : 'px-0 py-0 md:px-6 md:pt-4'
 	)}
 >
 	<div class="container mx-auto">
 		<!-- Top Bar -->
 		<div
 			class={cn(
-				'flex items-center justify-between gap-6 overflow-hidden px-6 py-2 transition-all duration-500',
+				'hidden items-center justify-between gap-6 overflow-hidden px-6 py-2 transition-all duration-500 md:flex',
 				isScrolled ? 'h-0 py-0 opacity-0' : 'h-10 opacity-100'
 			)}
 		>
@@ -116,10 +116,10 @@
 
 		<div
 			class={cn(
-				'transition-all duration-500 ease-in-out ',
+				'transition-all duration-500 ease-in-out w-full',
 				isScrolled
-					? 'mx-auto max-w-4xl rounded-full border-y border-white bg-white/5 px-6 py-2 backdrop-blur-2xl dark:border-white/5 dark:bg-black/20'
-					: 'mx-auto max-w-7xl rounded-3xl border-y border-white bg-background/50 px-6 py-3 backdrop-blur-md'
+					? 'mx-auto max-w-4xl rounded-full border border-primary/20 bg-background/80 px-4 py-2 shadow-lg backdrop-blur-2xl dark:border-white/10 dark:bg-black/80 md:px-6 md:py-3'
+					: 'mx-auto max-w-7xl border-b border-white/10 bg-background/40 px-4 py-3 backdrop-blur-md dark:bg-black/40 sm:rounded-b-3xl md:rounded-3xl md:border md:px-8 md:py-4'
 			)}
 		>
 			<nav class="flex items-center justify-between">
@@ -129,8 +129,8 @@
 						src={logoNav}
 						alt="Red Line Logo"
 						class={cn(
-							'h-10 w-auto object-contain transition-all duration-500 hover:scale-105 hover:brightness-110 md:h-12',
-							isScrolled && 'h-8 md:h-10'
+							'h-9 w-auto object-contain transition-all duration-500 hover:scale-105 hover:brightness-110 sm:h-10 md:h-12',
+							isScrolled && 'h-8 sm:h-9 md:h-10'
 						)}
 					/>
 				</a>
@@ -193,9 +193,9 @@
 						</Sheet.Trigger>
 						<Sheet.Content
 							side="right"
-							class="w-[300px] border-l border-border/20 bg-background/95 backdrop-blur-lg sm:w-[350px]"
+							class="w-[85vw] max-w-[350px] border-l border-border/20 bg-background/95 p-0 backdrop-blur-xl sm:w-[350px]"
 						>
-							<div class="flex h-full flex-col gap-8 px-2 py-10">
+							<div class="flex h-full flex-col gap-6 px-6 py-12">
 								<!-- Socials at Top for Mobile -->
 								<div class="flex items-center justify-center gap-6 border-b border-border/10 pb-6">
 									{#each socialLinks as social}
