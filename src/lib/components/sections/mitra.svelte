@@ -78,7 +78,7 @@
 		<p class="ps-subtitle">
 			Selalu menjadi sebuah kehormatan bagi kami, telah dipercayakan untuk<br />
 			menjalankan event untuk klien kami yang tercinta.
-		</p>
+		</p> 
 	</div>
 
 	<div class="ps-marquee-wrap" class:entered={hasEntered}>
@@ -191,12 +191,9 @@
 		max-width: 100%;
 		max-height: 80px;
 		object-fit: contain;
-		filter: brightness(0) invert(1);
-		opacity: 0.6;
 		transition: all 0.4s ease;
 	}
 	.ps-logo-item:hover .ps-logo {
-		opacity: 1;
 		transform: scale(1.1);
 	}
 

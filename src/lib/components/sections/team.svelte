@@ -26,7 +26,7 @@
 			initials: 'TB'
 		},
 		{
-			name: 'Anisa Nurul',
+			name: 'Anisa Nurul W.',
 			designation: 'Legal & Administration',
 			image: anisa,
 			initials: 'AN'
@@ -54,7 +54,7 @@
 
 <section class="team-section" bind:this={sectionEl}>
 	<!-- Background decorative elements -->
-	<div class="bg-orb"></div>
+	<div class="bg-orb"></div> 
 
 	<!-- Section header -->
 	<div class="section-header" class:animate-in={visible}>

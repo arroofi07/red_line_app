@@ -22,8 +22,8 @@
 	<Services />
 	<Metaverse/>
 	<Event />
-	<Gallery/>
 	<Team />
 	<Mitra />
+	<Gallery/>
 	<Post />
 </main>
