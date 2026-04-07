@@ -20,11 +20,6 @@
 		return () => cancelAnimationFrame(animFrame);
 	});
 
-	const stats = [
-		{ value: '200+', label: 'Events Organized' },
-		{ value: '14+', label: 'Years Experience' },
-		{ value: '50+', label: 'Expert Teams' }
-	];
 </script>
 
 <section id="home" class="hero-section relative flex min-h-screen flex-col overflow-hidden">
@@ -55,7 +50,7 @@
 						>
 							<span class="inline-block h-2 w-2 animate-pulse rounded-full bg-primary"></span>
 							<span class="text-[10px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white/60 uppercase"
-								>Est. Since 2010 · Padang, Indonesia</span
+								>EO PADANG. dari 2010 · Padang, Sumatera Barat, Indonesia</span
 							>
 						</div>
 
@@ -192,16 +187,6 @@
 									alt="Professional Event Organizer Illustration"
 									class="hero-character absolute bottom-0 left-1/2 z-10 h-full w-full -translate-x-1/2 object-contain py-2"
 								/>
-
-								<!-- Floating stats chips -->
-								<div class="float-chip chip-a scale-90 sm:scale-100 origin-bottom-right">
-									<span class="chip-value">200+</span>
-									<span class="chip-label">Events</span>
-								</div>
-								<div class="float-chip chip-b scale-90 sm:scale-100 origin-bottom-left">
-									<span class="chip-value">14+</span>
-									<span class="chip-label">Years</span>
-								</div>
 							</div>
 
 							<!-- Bottom gradient overlay on card -->
@@ -250,35 +235,6 @@
 				{/if}
 			</div>
 		</div>
-
-		<!-- Stats bar -->
-		{#if mounted}
-			<div
-				class="stats-bar relative z-10 border-t border-white/[0.06]"
-				in:fade={{ duration: 800, delay: 700 }}
-			>
-				<div class="container mx-auto px-3 sm:px-6 md:px-10">
-					<div class="flex w-full items-center justify-between divide-x divide-white/[0.06] py-3 sm:py-6 sm:justify-start">
-						{#each stats as stat, i}
-							<div class="flex flex-1 flex-col items-center gap-0.5 px-1 first:pl-0 last:pr-0 sm:flex-none sm:items-start sm:px-6 md:px-8">
-								<span class="stat-value text-lg leading-none font-black text-primary sm:text-2xl md:text-3xl"
-									>{stat.value}</span
-								>
-								<span class="text-[9px] font-medium text-white/40 text-center sm:text-left sm:text-sm">{stat.label}</span>
-							</div>
-						{/each}
-
-						<!-- Spacer + tagline -->
-						<div class="ml-auto hidden items-center gap-3 pl-8 md:flex">
-							<div class="h-1 w-1 rounded-full bg-primary/60"></div>
-							<span class="text-xs font-semibold tracking-[0.2em] text-white/30 uppercase"
-								>Professional Event Solutions</span
-							>
-						</div>
-					</div>
-				</div>
-			</div>
-		{/if}
 	</div>
 
 	<!-- Bottom fade -->

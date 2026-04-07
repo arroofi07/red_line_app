@@ -19,8 +19,8 @@
 
 <main class="flex flex-col bg-background">
 	<Hero />
-	<Metaverse/>
 	<Services />
+	<Metaverse/>
 	<Event />
 	<Gallery/>
 	<Team />

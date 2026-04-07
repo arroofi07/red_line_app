@@ -84,7 +84,7 @@
 					<li>
 						<a
 							href={link.href}
-							class="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-foreground/50 transition-all hover:text-primary"
+							class="text-[0.7rem] font-bold uppercase tracking-[0.2em] text-white transition-all hover:text-primary"
 						>
 							{link.name}
 						</a>
@@ -129,7 +129,7 @@
 							<div class="flex h-full flex-col gap-6 sm:gap-8 px-6 py-8 sm:px-8 sm:py-12 overflow-y-auto">
 								<div class="flex items-center justify-between shrink-0">
 									<img src={logoNav} alt="Red Line Logo" class="h-8 sm:h-10 w-auto" />
-									<Sheet.Close class="text-white/40 hover:text-white">
+									<Sheet.Close class="text-white hover:text-white">
 										<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
 									</Sheet.Close>
 								</div>
@@ -141,7 +141,7 @@
 											<a
 												href={link.href}
 												onclick={closeMobileMenu}
-												class="group flex items-center justify-between py-3 sm:py-4 text-xl sm:text-2xl font-bold text-white/60 transition-all hover:text-white"
+												class="group flex items-center justify-between py-3 sm:py-4 text-xl sm:text-2xl font-bold text-white transition-all hover:text-white"
 											>
 												{link.name}
 												<span class="h-px w-0 bg-primary transition-all group-hover:w-8"></span>
