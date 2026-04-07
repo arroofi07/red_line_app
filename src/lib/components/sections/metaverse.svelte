@@ -34,8 +34,8 @@
 				{#if mounted}
 					<div in:fly={{ x: 50, duration: 1000 }} class="flex flex-col gap-4">
 						<h2 class="font-display text-4xl leading-tight tracking-tight text-white md:text-6xl lg:text-7xl">
-							We Build The <br />
-							<span class="text-primary">Best Event For you</span>
+							Kami membangun<br />
+							<span class="text-primary">Event Terbaik Untukmu</span>
 						</h2>
 
 						<p class="mx-auto max-w-lg text-lg text-foreground/60 lg:mx-0">
