@@ -24,6 +24,6 @@
 	<Event />
 	<Team />
 	<Mitra />
-	<Gallery/>
 	<Post />
+	<Gallery/>
 </main>

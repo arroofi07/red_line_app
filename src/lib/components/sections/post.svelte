@@ -132,7 +132,7 @@
 						<span>{post.title}</span>
 						<span>◆</span>
 					</div>
-				{/each}
+				{/each} 
 			</div>
 		</div>
 	</div>
@@ -317,6 +317,9 @@
 	.is-ticker-label {
 		padding: 0 20px; font-weight: bold; color: white; background: var(--primary);
 		height: 100%; display: flex; align-items: center;
+		position: relative;
+		z-index: 10;
+		flex-shrink: 0;
 	}
 
 	.is-ticker-track { display: flex; animation: tickerScroll 30s linear infinite; }
