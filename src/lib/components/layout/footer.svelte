@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import logo from '$lib/assets/logo/logo redline asset 28@300x.png';
+	import logo from '$lib/assets/logo/logo1.png';
 	import Facebook from 'lucide-svelte/icons/facebook';
 	import Instagram from 'lucide-svelte/icons/instagram';
 	import Youtube from 'lucide-svelte/icons/youtube';
