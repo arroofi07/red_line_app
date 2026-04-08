@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-  import logo from '$lib/assets/logo_nav_2.png';
+  import logo from '$lib/assets/logo/logo1.png';
 
 	let footerEl: HTMLElement;
 	let hasEntered = $state(false);
