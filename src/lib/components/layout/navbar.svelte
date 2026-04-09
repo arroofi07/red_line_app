@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
-	import { fade, slide } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { page } from '$app/stores';
 	import { cn } from '$lib/utils';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { Button } from '$lib/components/ui/button';
-	import { Separator } from '$lib/components/ui/separator';
 	import MenuIcon from 'lucide-svelte/icons/menu';
 	import Facebook from 'lucide-svelte/icons/facebook';
 	import Instagram from 'lucide-svelte/icons/instagram';
@@ -13,16 +13,15 @@
 
 	let isScrolled = $state(false);
 	let isMobileMenuOpen = $state(false);
-	let activeSection = $state('home');
 
 	const navLinks = [
 		{ name: 'Home', href: '/', id: 'home' },
-		{ name: 'About', href: 'about-redline-communication', id: 'about' },
-		{ name: 'Production', href: 'production-redline', id: 'production' },
-		{ name: 'Event', href: 'projects-redline', id: 'event' },
-		{ name: 'Services', href: 'services-redline', id: 'services' },
-		{ name: 'Contact', href: 'contact-redline', id: 'contact' },
-		{ name: 'Blogs', href: 'blogs', id: 'blogs' }
+		{ name: 'About', href: '/about-redline-communication', id: 'about' },
+		{ name: 'Production', href: '/production-redline', id: 'production' },
+		{ name: 'Event', href: '/projects-redline', id: 'event' },
+		{ name: 'Services', href: '/services-redline', id: 'services' },
+		{ name: 'Contact', href: '/contact-redline', id: 'contact' },
+		{ name: 'Blogs', href: '/blogs', id: 'blogs' }
 	];
 
 	const socialLinks = [
@@ -31,43 +30,20 @@
 		{ name: 'YouTube', href: 'https://youtube.com/redline_communication', icon: Youtube }
 	];
 
+	// Determine active link based on current pathname
+	function isActive(href: string, pathname: string): boolean {
+		if (href === '/') return pathname === '/';
+		return pathname.startsWith(href);
+	}
+
 	onMount(() => {
 		const handleScroll = () => {
 			isScrolled = window.scrollY > 20;
 		};
 		window.addEventListener('scroll', handleScroll);
 
-		// Intersection Observer for active sections
-		const observerOptions = {
-			root: null,
-			rootMargin: '-20% 0px -70% 0px',
-			threshold: 0
-		};
-
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					activeSection = entry.target.id;
-				}
-			});
-		}, observerOptions);
-
-		// Observe sections, handle home separately if needed
-		const observeSections = async () => {
-			await tick();
-			navLinks.forEach((link) => {
-				if (link.id !== 'home') {
-					const element = document.getElementById(link.id);
-					if (element) observer.observe(element);
-				}
-			});
-		};
-
-		observeSections();
-
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
-			observer.disconnect();
 		};
 	});
 
@@ -143,15 +119,14 @@
 								href={link.href}
 								class={cn(
 									'relative px-4 py-2 text-sm font-medium transition-all duration-300 focus-visible:outline-hidden',
-									activeSection === link.id
+									isActive(link.href, $page.url.pathname)
 										? 'text-primary'
 										: 'text-foreground/70 hover:text-primary'
 								)}
 							>
 								{link.name}
-								{#if activeSection === link.id}
+								{#if isActive(link.href, $page.url.pathname)}
 									<span
-										layoutId="active-nav"
 										class="absolute inset-x-4 -bottom-1 h-1 rounded-full bg-primary shadow-[0_0_10px_rgba(220,38,38,0.5)]"
 										in:fade={{ duration: 200 }}
 									></span>
@@ -233,7 +208,7 @@
 												onclick={closeMobileMenu}
 												class={cn(
 													'flex items-center rounded-lg px-4 py-3 text-lg font-medium transition-all duration-200',
-													activeSection === link.id
+													isActive(link.href, $page.url.pathname)
 														? 'bg-primary/10 text-primary'
 														: 'text-foreground/70 hover:bg-muted hover:text-foreground'
 												)}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
+	import { cn } from '$lib/utils';
 	import gallery1 from '$lib/assets/gallery_1.png';
 	import gallery2 from '$lib/assets/gallery_2.png';
 	import gallery3 from '$lib/assets/gallery_3.png';
@@ -63,6 +64,3 @@
 	</div>
 </section>
 
-<script module>
-	import { cn } from '$lib/utils';
-</script>

@@ -101,16 +101,18 @@
 					{/if}
 				{/each}
 
-				<div
-					class="col-span-full flex items-center justify-center"
-					in:fade={{ duration: 1000, delay: 600 }}
-				>
-					<button
-						class="cursor-pointer rounded-3xl bg-primary px-4 py-4 text-xs font-bold whitespace-nowrap shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-primary/80 sm:px-8 sm:py-4 sm:text-sm"
+				{#if mounted}
+					<div
+						class="col-span-full flex items-center justify-center"
+						in:fade={{ duration: 1000, delay: 600 }}
 					>
-						More Details
-					</button>
-				</div>
+						<button
+							class="cursor-pointer rounded-3xl bg-primary px-4 py-4 text-xs font-bold whitespace-nowrap shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-primary/80 sm:px-8 sm:py-4 sm:text-sm"
+						>
+							More Details
+						</button>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</div>

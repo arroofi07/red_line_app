@@ -1,57 +1,59 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { getLatestBlogs, type Blog } from '$lib/firebase/blogs';
 
-	const posts = [
+	const fallbackPosts = [
 		{
-			id: 1,
+			id: '1',
 			category: 'Event Organizer',
 			tag: 'Featured',
 			title: 'Bagaimana Kami Mengelola Event 5.000 Peserta di Padang dengan Zero Incident',
 			excerpt: 'Studi kasus lengkap tentang manajemen risiko, koordinasi tim, dan eksekusi event berskala besar yang sukses bersama Redline Communication.',
 			date: '12 Maret 2025',
 			readTime: '8 min read',
-			image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+			imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
 			author: 'Tim Redline',
-			authorAvatar: 'https://i.pravatar.cc/40?img=1'
+			slug: ''
 		},
 		{
-			id: 2,
+			id: '2',
 			category: 'MICE',
 			tag: 'Tips',
 			title: 'Checklist Lengkap Persiapan MICE yang Wajib Anda Miliki',
 			excerpt: 'Panduan step-by-step dari venue selection hingga post-event report untuk meeting, incentive, conference, dan exhibition.',
 			date: '5 Maret 2025',
 			readTime: '5 min read',
-			image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&q=80',
+			imageUrl: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=600&q=80',
 			author: 'Sarah R.',
-			authorAvatar: 'https://i.pravatar.cc/40?img=5'
+			slug: ''
 		},
 		{
-			id: 3,
+			id: '3',
 			category: 'Production',
 			tag: 'Insight',
 			title: 'Tren Stage Production 2025: LED Wall vs Hologram',
 			excerpt: 'Breakdown perbandingan teknologi visual terkini untuk event produksi — mana yang lebih impactful untuk brand anda.',
 			date: '28 Feb 2025',
 			readTime: '6 min read',
-			image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80',
+			imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80',
 			author: 'Andi P.',
-			authorAvatar: 'https://i.pravatar.cc/40?img=3'
+			slug: ''
 		},
 		{
-			id: 4,
+			id: '4',
 			category: 'Branding',
 			tag: 'Case Study',
 			title: 'Product Launch Spektakuler: Strategi yang Membuat 10.000 Orang Hadir',
 			excerpt: 'Bagaimana strategi komunikasi yang tepat mampu mendrive attendance jauh melampaui target awal.',
 			date: '20 Feb 2025',
 			readTime: '7 min read',
-			image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80',
+			imageUrl: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&q=80',
 			author: 'Tim Redline',
-			authorAvatar: 'https://i.pravatar.cc/40?img=2'
+			slug: ''
 		}
 	];
 
+	let posts = $state<any[]>(fallbackPosts);
 	let sectionEl: HTMLElement;
 	let hasEntered = $state(false);
 
@@ -61,6 +63,27 @@
 			{ threshold: 0.1 }
 		);
 		if (sectionEl) obs.observe(sectionEl);
+
+		getLatestBlogs(4).then(latest => {
+			if (latest && latest.length > 0) {
+				posts = latest.map((b) => ({
+					id: b.id,
+					category: b.category,
+					tag: b.tag,
+					title: b.title,
+					excerpt: b.excerpt,
+					date: b.publishedAt?.seconds 
+						? new Date(b.publishedAt.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
+						: '',
+					readTime: b.readTime,
+					imageUrl: b.imageUrl,
+					author: b.author,
+					slug: b.slug
+				}));
+			}
+		}).catch(e => {
+			console.error('Failed to load recent blogs', e);
+		});
 
 		return () => obs.disconnect();
 	});
@@ -84,7 +107,7 @@
 				</p>
 			</div>
 			<div class="is-header-right">
-				<a href="#blog" class="is-all-btn">
+				<a href="/blogs" class="is-all-btn">
 					<span>Lihat Semua</span>
 					<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 						<path d="M5 12h14M12 5l7 7-7 7"/>
@@ -94,9 +117,10 @@
 		</header>
 
 		<div class="is-grid" class:entered={hasEntered}>
-			<article class="is-featured">
+			{#if posts.length > 0}
+			<a href={posts[0].slug ? `/blogs/${posts[0].slug}` : '#'} class="is-featured cursor-pointer block no-underline">
 				<div class="is-featured-img-wrap">
-					<img src={posts[0].image} alt={posts[0].title} class="is-featured-img" loading="lazy" />
+					<img src={posts[0].imageUrl} alt={posts[0].title} class="is-featured-img" loading="lazy" />
 				</div>
 				<div class="is-featured-body">
 					<div class="is-featured-meta">
@@ -106,19 +130,20 @@
 					<h3 class="is-featured-title">{posts[0].title}</h3>
 					<p class="is-featured-excerpt">{posts[0].excerpt}</p>
 				</div>
-			</article>
+			</a>
+			{/if}
 
 			<div class="is-side-posts">
 				{#each posts.slice(1) as post}
-					<article class="is-card">
+					<a href={post.slug ? `/blogs/${post.slug}` : '#'} class="is-card cursor-pointer block no-underline text-current">
 						<div class="is-card-thumb">
-							<img src={post.image} alt={post.title} class="is-card-img" loading="lazy" />
+							<img src={post.imageUrl} alt={post.title} class="is-card-img" loading="lazy" />
 						</div>
 						<div class="is-card-body">
 							<div class="is-card-meta">{post.category} • {post.date}</div>
 							<h3 class="is-card-title">{post.title}</h3>
 						</div>
-					</article>
+					</a>
 				{/each}
 			</div>
 		</div>
