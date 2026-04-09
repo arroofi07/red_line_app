@@ -54,24 +54,27 @@ export async function compressImage(file: File, maxWidth = 800, quality = 0.8): 
 	});
 }
 
+function blobToBase64(blob: Blob): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader();
+		reader.onloadend = () => resolve(reader.result as string);
+		reader.onerror = reject;
+		reader.readAsDataURL(blob);
+	});
+}
+
 /**
- * Upload gambar ke Firebase Storage dengan kompresi otomatis.
+ * Kompresi dan convert ke Base64 (tanpa upload ke Firebase Storage).
  * @returns { imageUrl, imagePath }
  */
 export async function uploadBlogImage(
 	file: File,
 	blogId: string
 ): Promise<{ imageUrl: string; imagePath: string }> {
-	if (!isFirebaseConfigured || !storage) throw new Error('Firebase is not configured');
-	const compressed = await compressImage(file);
-	const ext = 'jpg'; // selalu JPEG setelah kompresi
-	const imagePath = `blogs/${blogId}_${Date.now()}.${ext}`;
-	const storageRef = ref(storage, imagePath);
+	const compressed = await compressImage(file, 800, 0.7); // Kompresi kuat agar muat di Database
+	const base64Url = await blobToBase64(compressed);
 
-	await uploadBytes(storageRef, compressed, { contentType: 'image/jpeg' });
-	const imageUrl = await getDownloadURL(storageRef);
-
-	return { imageUrl, imagePath };
+	return { imageUrl: base64Url, imagePath: '' };
 }
 
 /**
