@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { Button } from '$lib/components/ui/button';
+	import bankNagari from '$lib/assets/event-page/bank-nagari.png';
 
 	let mounted = $state(false);
 	let rotation = $state(0);
@@ -19,7 +20,6 @@
 
 		return () => cancelAnimationFrame(animFrame);
 	});
-
 </script>
 
 <section id="home" class="hero-section relative flex min-h-screen flex-col overflow-hidden">
@@ -37,19 +37,25 @@
 	<!-- Main content -->
 	<div class="relative z-10 flex flex-1 flex-col">
 		<!-- Hero body: two columns -->
-		<div class="container mx-auto flex flex-1 items-center px-4 pt-24 pb-6 sm:px-6 sm:pt-28 md:px-10 md:pt-32">
+		<div
+			class="container mx-auto flex flex-1 items-center px-4 pt-24 pb-6 sm:px-6 sm:pt-28 md:px-10 md:pt-32"
+		>
 			<div
 				class="grid w-full grid-cols-1 items-center gap-6 sm:gap-8 md:gap-10 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_480px]"
 			>
 				<!-- LEFT: Text content -->
 				{#if mounted}
-					<div class="flex flex-col gap-4 sm:gap-6 mt-4 sm:mt-0" in:fly={{ y: 60, duration: 900, delay: 100 }}>
+					<div
+						class="mt-4 flex flex-col gap-4 sm:mt-0 sm:gap-6"
+						in:fly={{ y: 60, duration: 900, delay: 100 }}
+					>
 						<!-- Badge pill -->
 						<div
-							class="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 sm:px-4 backdrop-blur-sm"
+							class="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-sm sm:px-4"
 						>
 							<span class="inline-block h-2 w-2 animate-pulse rounded-full bg-primary"></span>
-							<span class="text-[10px] sm:text-xs font-semibold tracking-[0.2em] sm:tracking-[0.25em] text-white/60 uppercase"
+							<span
+								class="text-[10px] font-semibold tracking-[0.2em] text-white/60 uppercase sm:text-xs sm:tracking-[0.25em]"
 								>EO PADANG. dari 2010 · Padang, Sumatera Barat, Indonesia</span
 							>
 						</div>
@@ -133,26 +139,32 @@
 						</div>
 
 						<!-- CTA row -->
-						<div class="flex flex-wrap items-center gap-3 sm:gap-6 pt-3 sm:pt-4" in:fly={{ y: 30, duration: 800, delay: 400 }}>
+						<div
+							class="flex flex-wrap items-center gap-3 pt-3 sm:gap-6 sm:pt-4"
+							in:fly={{ y: 30, duration: 800, delay: 400 }}
+						>
 							<a
 								href="#contact"
-								class="cta-btn group shadow-glow inline-flex items-center gap-2 sm:gap-3 rounded-full bg-primary px-5 py-3 sm:px-8 sm:py-4 text-[13px] sm:text-base font-bold text-white transition-all hover:scale-105 hover:bg-primary/90"
+								class="cta-btn group shadow-glow inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-[13px] font-bold text-white transition-all hover:scale-105 hover:bg-primary/90 sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
 							>
 								Explore Now
 								<span
-									class="cta-arrow inline-flex h-5 w-5 sm:h-7 sm:w-7 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1"
+									class="cta-arrow inline-flex h-5 w-5 items-center justify-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1 sm:h-7 sm:w-7"
 								>
 									&rarr;
 								</span>
 							</a>
 
 							<div class="flex items-center gap-2 sm:gap-3">
-								<div class="h-6 sm:h-10 w-px bg-white/15"></div>
+								<div class="h-6 w-px bg-white/15 sm:h-10"></div>
 								<div class="flex flex-col">
-									<span class="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] sm:tracking-[0.3em] text-primary uppercase"
+									<span
+										class="text-[9px] font-bold tracking-[0.2em] text-primary uppercase sm:text-[10px] sm:tracking-[0.3em]"
 										>Contact</span
 									>
-									<span class="text-[11px] sm:text-sm font-medium text-white/40">+62 xxx-xxxx-xxxx</span>
+									<span class="text-[11px] font-medium text-white/40 sm:text-sm"
+										>+62 xxx-xxxx-xxxx</span
+									>
 								</div>
 							</div>
 						</div>
@@ -176,14 +188,16 @@
 							<div class="bg-card-gradient absolute inset-0 z-0"></div>
 
 							<!-- VR Person Illustration -->
-							<div class="relative z-10 h-[260px] w-full overflow-hidden sm:h-[360px] md:h-[420px] lg:h-[500px]">
+							<div
+								class="relative z-10 h-[260px] w-full overflow-hidden sm:h-[360px] md:h-[420px] lg:h-[500px]"
+							>
 								<!-- Ambient light glow behind figure -->
 								<div class="figure-glow-red"></div>
 								<div class="figure-glow-red-secondary"></div>
 
 								<!-- Hero Illustration -->
 								<img
-									src="/src/lib/assets/hero_illustration.png"
+									src={bankNagari}
 									alt="Professional Event Organizer Illustration"
 									class="hero-character absolute bottom-0 left-1/2 z-10 h-full w-full -translate-x-1/2 object-contain py-2"
 								/>
@@ -196,7 +210,9 @@
 						</div>
 
 						<!-- Rotating circular badge -->
-						<div class="badge-ring absolute -top-4 -right-4 sm:-top-6 sm:-right-6 lg:-top-8 lg:-right-8">
+						<div
+							class="badge-ring absolute -top-4 -right-4 sm:-top-6 sm:-right-6 lg:-top-8 lg:-right-8"
+						>
 							<div class="badge-inner" style="transform: rotate({rotation}deg)">
 								<svg viewBox="0 0 120 120" width="120" height="120">
 									<defs>

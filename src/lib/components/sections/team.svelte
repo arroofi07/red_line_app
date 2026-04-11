@@ -52,7 +52,7 @@
 	});
 </script>
 
-<section class="team-section" bind:this={sectionEl}>
+<section class="team-section" id="our-teams" bind:this={sectionEl}>
 	<!-- Background decorative elements -->
 	<div class="bg-orb"></div> 
 
