@@ -1,24 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getBlogs, type Blog } from '$lib/firebase/blogs';
+	import { getProductions } from '$lib/firebase/productions';
+	import { getEvents } from '$lib/firebase/events';
+	import { FEATURED_SERVICE_SLUGS, getServiceImages } from '$lib/firebase/services';
 
 	let blogs = $state<Blog[]>([]);
+	let totalProductions = $state(0);
+	let totalEvents = $state(0);
+	let serviceGalleryPhotos = $state(0);
 	let loading = $state(true);
 	let error = $state('');
 
 	onMount(async () => {
 		try {
-			blogs = await getBlogs();
+			const [blogsData, prods, evts, ...galleries] = await Promise.all([
+				getBlogs(),
+				getProductions(),
+				getEvents(),
+				...FEATURED_SERVICE_SLUGS.map((slug) => getServiceImages(slug))
+			]);
+			blogs = blogsData;
+			totalProductions = prods.length;
+			totalEvents = evts.length;
+			serviceGalleryPhotos = galleries.reduce((sum, imgs) => sum + imgs.length, 0);
 		} catch (e) {
-			error = 'Gagal memuat data blog.';
+			error = 'Gagal memuat data.';
 		} finally {
 			loading = false;
 		}
 	});
 
-	$derived: {
-		// stats
-	}
 	let totalBlogs = $derived(blogs.length);
 	let categories = $derived([...new Set(blogs.map((b) => b.category))]);
 	let latestBlog = $derived(blogs[0]);
@@ -66,6 +78,27 @@
 					{/if}
 				</div>
 				<div class="stat-label">Post Terakhir</div>
+			</div>
+		</div>
+		<div class="stat-card">
+			<div class="stat-icon">🎬</div>
+			<div class="stat-body">
+				<div class="stat-value">{totalProductions}</div>
+				<div class="stat-label">Production</div>
+			</div>
+		</div>
+		<div class="stat-card">
+			<div class="stat-icon">🎪</div>
+			<div class="stat-body">
+				<div class="stat-value">{totalEvents}</div>
+				<div class="stat-label">Events</div>
+			</div>
+		</div>
+		<div class="stat-card">
+			<div class="stat-icon">🖼️</div>
+			<div class="stat-body">
+				<div class="stat-value">{serviceGalleryPhotos}</div>
+				<div class="stat-label">Foto galeri layanan</div>
 			</div>
 		</div>
 	</div>

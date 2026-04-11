@@ -3,6 +3,8 @@
 	import { fly, fade } from 'svelte/transition';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { breadcrumbSchema } from '$lib/seo/schemas';
+	import { getEvents } from '$lib/firebase/events';
+	import { isFirebaseConfigured } from '$lib/firebase/config';
 	import {
 		aquaElectronic,
 		aslabkesda,
@@ -27,7 +29,7 @@
 	let historyEl: HTMLElement;
 	let ctaEl: HTMLElement;
 
-	const latestProjects = [
+	const fallbackProjects = [
 		{ title: 'PERTAMINA DTEC CONNECT 4.0', place: 'The Balcone Hotel Bukittinggi', image: pertamina },
 		{ title: 'Bank Nagari Inspiring Leader', place: 'Santika Premiere Hotel Padang', image: bankNagari },
 		{ title: 'Symposium PERDAMI', place: 'ZHM Padang', image: perdami },
@@ -38,6 +40,8 @@
 		{ title: 'Kampus Merdeka Fair', place: 'LLDIKTI', image: lldikti },
 		{ title: 'Anugerah 50th', place: 'Politeknik ATI Padang', image: politeknikAtiPadang }
 	];
+
+	let latestProjects = $state(fallbackProjects);
 
 	const historicalHighlights = [
 		{
@@ -186,7 +190,24 @@
 		}
 	];
 
+	async function loadFromFirebase() {
+		if (!isFirebaseConfigured) return;
+		try {
+			const evts = await getEvents();
+			if (evts.length > 0) {
+				latestProjects = evts.map((e) => ({
+					title: e.title,
+					place: e.place || '',
+					image: e.imageUrl
+				}));
+			}
+		} catch {
+			// fallback ke data hardcoded
+		}
+	}
+
 	onMount(() => {
+		loadFromFirebase();
 		mounted = true;
 
 		const createObserver = (el: HTMLElement, setter: (v: boolean) => void) => {

@@ -3,6 +3,8 @@
 	import { fly, fade } from 'svelte/transition';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { breadcrumbSchema } from '$lib/seo/schemas';
+	import { getProductions } from '$lib/firebase/productions';
+	import { isFirebaseConfigured } from '$lib/firebase/config';
 	import {
 		biofarma,
 		bgpIndonesia,
@@ -56,7 +58,7 @@
 		{ title: 'Execution', desc: 'Loading in, show management, dan eksekusi event di hari H.' }
 	];
 
-	const galleryItems: { src: string; name: string }[] = [
+	const fallbackGallery: { src: string; name: string }[] = [
 		{ src: biofarma, name: 'biofarma' },
 		{ src: bgpIndonesia, name: 'bgpIndonesia' },
 		{ src: datamine, name: 'datamine' },
@@ -71,7 +73,22 @@
 		{ src: nawaTech, name: 'nawaTech' }
 	];
 
+	let galleryItems = $state(fallbackGallery);
+
+	async function loadFromFirebase() {
+		if (!isFirebaseConfigured) return;
+		try {
+			const prods = await getProductions();
+			if (prods.length > 0) {
+				galleryItems = prods.map((p) => ({ src: p.imageUrl, name: p.title }));
+			}
+		} catch {
+			// fallback ke data hardcoded
+		}
+	}
+
 	onMount(() => {
+		loadFromFirebase();
 		mounted = true;
 
 		const createObserver = (el: HTMLElement, setter: (v: boolean) => void) => {

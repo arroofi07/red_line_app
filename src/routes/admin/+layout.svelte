@@ -40,6 +40,9 @@
 		{ href: '/admin', label: 'Dashboard', icon: '📊' },
 		{ href: '/admin/blogs', label: 'Manajemen Blog', icon: '📝' },
 		{ href: '/admin/blogs/create', label: 'Buat Blog Baru', icon: '✏️' },
+		{ href: '/admin/productions', label: 'Production', icon: '🎬' },
+		{ href: '/admin/events', label: 'Events', icon: '🎪' },
+		{ href: '/admin/services', label: 'Galeri layanan', icon: '🖼️' },
 		{ href: '/', label: '← Kembali ke Site', icon: '🌐' }
 	];
 
@@ -105,7 +108,9 @@
 					<a
 						href={item.href}
 						class="admin-nav-item"
-						class:active={item.href !== '/' && currentPath === item.href}
+						class:active={item.href === '/admin'
+							? currentPath === '/admin'
+							: item.href !== '/' && currentPath.startsWith(item.href)}
 					>
 						<span class="admin-nav-icon">{item.icon}</span>
 						<span>{item.label}</span>

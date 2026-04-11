@@ -78,6 +78,83 @@ export async function uploadBlogImage(
 }
 
 /**
+ * Kompresi gambar lebih agresif untuk konten (production/event/service).
+ * - Max width: 600px
+ * - Output: WebP (fallback JPEG), kualitas 60%
+ * - Estimasi: 1MB → ~30-60KB
+ */
+export async function compressImageOptimized(
+	file: File,
+	maxWidth = 600,
+	quality = 0.6
+): Promise<Blob> {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		const objectUrl = URL.createObjectURL(file);
+
+		img.onload = () => {
+			URL.revokeObjectURL(objectUrl);
+
+			let { width, height } = img;
+
+			if (width > maxWidth) {
+				height = Math.round((height * maxWidth) / width);
+				width = maxWidth;
+			}
+
+			const canvas = document.createElement('canvas');
+			canvas.width = width;
+			canvas.height = height;
+
+			const ctx = canvas.getContext('2d');
+			if (!ctx) {
+				reject(new Error('Canvas context tidak tersedia'));
+				return;
+			}
+
+			ctx.drawImage(img, 0, 0, width, height);
+
+			// Coba WebP dulu (lebih kecil ~30%), fallback ke JPEG
+			canvas.toBlob(
+				(blob) => {
+					if (blob && blob.type === 'image/webp') {
+						resolve(blob);
+					} else {
+						// Fallback ke JPEG jika WebP tidak didukung
+						canvas.toBlob(
+							(jpegBlob) => {
+								if (jpegBlob) resolve(jpegBlob);
+								else reject(new Error('Gagal mengkompresi gambar'));
+							},
+							'image/jpeg',
+							quality
+						);
+					}
+				},
+				'image/webp',
+				quality
+			);
+		};
+
+		img.onerror = () => {
+			URL.revokeObjectURL(objectUrl);
+			reject(new Error('Gagal memuat gambar'));
+		};
+
+		img.src = objectUrl;
+	});
+}
+
+/**
+ * Kompresi dan convert ke Base64 untuk konten (production/event/service).
+ * Menggunakan kompresi agresif agar hemat database.
+ */
+export async function uploadContentImage(file: File): Promise<string> {
+	const compressed = await compressImageOptimized(file, 600, 0.6);
+	return blobToBase64(compressed);
+}
+
+/**
  * Hapus gambar dari Firebase Storage berdasarkan path.
  * Aman dipanggil meski path kosong.
  */

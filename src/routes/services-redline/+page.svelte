@@ -3,6 +3,12 @@
 	import { fly } from 'svelte/transition';
 	import Seo from '$lib/components/seo/Seo.svelte';
 	import { breadcrumbSchema } from '$lib/seo/schemas';
+	import {
+		FEATURED_SERVICE_SLUGS,
+		FEATURED_SERVICES_STATIC,
+		getServiceImages
+	} from '$lib/firebase/services';
+	import { isFirebaseConfigured } from '$lib/firebase/config';
 	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
 	import Clapperboard from 'lucide-svelte/icons/clapperboard';
 	import Package from 'lucide-svelte/icons/package';
@@ -24,35 +30,17 @@
 	let moreEl: HTMLElement;
 	let ctaEl: HTMLElement;
 
-	const featuredServices = [
-		{
-			id: 'eo',
-			title: 'Event Organizer',
-			subtitle: 'Professional Organizer',
-			description:
-				'Jasa penyelenggara event yang telah berpengalaman selama lebih dari 12 tahun. Kami telah sukses menyelenggarakan berbagai jenis event, dan selanjutnya adalah event anda!',
-			icon: CalendarCheck,
-			gallery: eventOrganizerGallery
-		},
-		{
-			id: 'production',
-			title: 'Event Production',
-			subtitle: 'Idea Reality',
-			description:
-				'Divisi produksi event dari Redline Communication. Redline Production hadir sebagai jawaban untuk merubah ide anda menjadi nyata.',
-			icon: Clapperboard,
-			gallery: eventProductionGallery
-		},
-		{
-			id: 'rental',
-			title: 'Event Equipment Rental',
-			subtitle: 'Small to Large Scale',
-			description:
-				'Kami juga menyediakan jasa sewa alat/perlengkapan event anda, skala kecil ataupun besar kami siap menyediakannya.',
-			icon: Package,
-			gallery: eventEquipmentRentalGallery
-		}
-	];
+	const staticGalleries = [eventOrganizerGallery, eventProductionGallery, eventEquipmentRentalGallery];
+	const defaultIcons = [CalendarCheck, Clapperboard, Package] as const;
+
+	const fallbackFeaturedServices = FEATURED_SERVICE_SLUGS.map((slug, i) => ({
+		id: slug,
+		...FEATURED_SERVICES_STATIC[slug],
+		icon: defaultIcons[i],
+		gallery: staticGalleries[i]
+	}));
+
+	let featuredServices = $state(fallbackFeaturedServices);
 
 	const moreServices = [
 		{
@@ -81,7 +69,35 @@
 		}
 	];
 
+	async function loadFromFirebase() {
+		if (!isFirebaseConfigured) return;
+		try {
+			const galleries = await Promise.all(
+				FEATURED_SERVICE_SLUGS.map((slug) => getServiceImages(slug))
+			);
+			featuredServices = FEATURED_SERVICE_SLUGS.map((slug, i) => {
+				const meta = FEATURED_SERVICES_STATIC[slug];
+				const fb = galleries[i];
+				const gallery =
+					fb.length > 0
+						? fb.map((img) => ({ src: img.imageUrl, alt: img.alt }))
+						: staticGalleries[i];
+				return {
+					id: slug,
+					title: meta.title,
+					subtitle: meta.subtitle,
+					description: meta.description,
+					icon: defaultIcons[i],
+					gallery
+				};
+			});
+		} catch {
+			// fallback ke data hardcoded
+		}
+	}
+
 	onMount(() => {
+		loadFromFirebase();
 		mounted = true;
 
 		const createObserver = (el: HTMLElement, setter: (v: boolean) => void) => {
