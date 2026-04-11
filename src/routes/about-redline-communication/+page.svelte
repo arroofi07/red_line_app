@@ -26,23 +26,23 @@
 
 	const reasons = [
 		{
-			title: 'Budget Rasional',
-			desc: 'Kami menawarkan jasa terbaik dengan range budget yang menarik dan rasional untuk semua kalangan.',
+			title: 'Experience',
+			desc: 'Tim kami memiliki pengalaman luas dalam menangani berbagai skala event, memastikan setiap detail terencana dan terlaksana dengan baik.',
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>`
 		},
 		{
-			title: 'Ide Out of the Box',
-			desc: 'Tentunya event dan kegiatan anda akan memorable dengan ide konten yang out of the box dan kreatif.',
+			title: 'Creative Concept',
+			desc: 'Kami menghadirkan ide-ide kreatif yang inovatif untuk membuat event Anda berbeda, berkesan, dan tak terlupakan bagi audiens.',
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`
 		},
 		{
-			title: 'Jaminan Terbaik',
-			desc: 'Jaminan untuk hasil terbaik dengan mempertimbangkan detail-detail kecil hingga event anda sukses.',
+			title: 'Professional Management',
+			desc: 'Manajemen event kami rapi, terstruktur, dan tepat waktu, sehingga Anda dapat fokus pada hal-hal penting lainnya.',
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
 		},
 		{
-			title: 'Tim Profesional',
-			desc: 'Tim dari perusahaan kami terdiri dari orang-orang yang berpengalaman, bersertifikat, dan professional.',
+			title: 'Full Production Support',
+			desc: 'Kami didukung oleh peralatan produksi profesional dan tim teknis berpengalaman untuk menjamin kelancaran dan kualitas terbaik dari setiap aspek produksi event.',
 			icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`
 		}
 	];
