@@ -1,6 +1,20 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import {
+		biofarma,
+		bgpIndonesia,
+		datamine,
+		deltaSaintifik,
+		dsi,
+		enseval,
+		euroClinic,
+		kasoemHearing,
+		kilangPertamina,
+		lessential,
+		merck,
+		nawaTech
+	} from '$lib/assets/production-page';
 
 	let mounted = $state(false);
 	let heroVisible = $state(false);
@@ -40,19 +54,19 @@
 		{ title: 'Execution', desc: 'Loading in, show management, dan eksekusi event di hari H.' }
 	];
 
-	const galleryImages = [
-		'https://redlinecomunication.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-03-at-07.43.55_be8fa8ef.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-12-at-08.25.47_389ce50e.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-23-at-16.30.23_244f0d55.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-23-at-19.33.29_8309fdda.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-08-30-at-12.12.36_ecb536df.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-07-09-at-23.27.18_99c36d30.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-09-24-at-09.20.22_c8281b96.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-09-24-at-09.20.21_bd755861.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-23-at-16.47.29_77d2c7d3.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/10/WhatsApp-Image-2024-10-23-at-17.35.02_5bf66aae.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-07-09-at-17.26.01_c87ae8c8.jpg',
-		'https://redlinecomunication.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-07-09-at-23.27.14_484a9a67.jpg'
+	const galleryItems: { src: string; name: string }[] = [
+		{ src: biofarma, name: 'biofarma' },
+		{ src: bgpIndonesia, name: 'bgpIndonesia' },
+		{ src: datamine, name: 'datamine' },
+		{ src: deltaSaintifik, name: 'deltaSaintifik' },
+		{ src: dsi, name: 'dsi' },
+		{ src: enseval, name: 'enseval' },
+		{ src: euroClinic, name: 'euroClinic' },
+		{ src: kasoemHearing, name: 'kasoemHearing' },
+		{ src: kilangPertamina, name: 'kilangPertamina' },
+		{ src: lessential, name: 'lessential' },
+		{ src: merck, name: 'merck' },
+		{ src: nawaTech, name: 'nawaTech' }
 	];
 
 	onMount(() => {
@@ -212,10 +226,11 @@
 			</div>
 
 			<div class="masonry-grid">
-				{#each galleryImages as img, i}
+				{#each galleryItems as item, i}
 					<div class="masonry-item" class:visible={galleryVisible} style="--delay: {(i % 4) * 100}ms">
-						<img src={img} alt="Production Event Gallery {i+1}" loading="lazy" />
+						<img src={item.src} alt={item.name} loading="lazy" />
 						<div class="mi-overlay" aria-hidden="true"></div>
+						<p class="mi-caption">{item.name}</p>
 					</div>
 				{/each}
 			</div>
@@ -625,11 +640,28 @@
 	}
 	
 	.mi-overlay {
-		position: absolute; inset: 0;
+		position: absolute; inset: 0; z-index: 1;
 		background: linear-gradient(to top, rgba(220,38,38,0.4) 0%, transparent 50%);
 		opacity: 0; transition: opacity 0.3s; pointer-events: none;
 	}
 	.masonry-item:hover .mi-overlay { opacity: 1; }
 	.masonry-item:hover img { transform: scale(1.05); }
+
+	.mi-caption {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 2;
+		margin: 0;
+		padding: 0.75rem 1rem 0.85rem;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		color: #fff;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+		pointer-events: none;
+	}
 
 </style>

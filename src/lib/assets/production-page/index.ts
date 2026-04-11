@@ -1,0 +1,12 @@
+export { default as biofarma } from './biofarma.jpg';
+export { default as bgpIndonesia } from './bgp-indonesia.jpg';
+export { default as datamine } from './datamine.jpg';
+export { default as deltaSaintifik } from './delta-saintifik.jpg';
+export { default as dsi } from './dsi.jpg';
+export { default as enseval } from './enseval.jpg';
+export { default as euroClinic } from './euro-clinic.jpg';
+export { default as kasoemHearing } from './kasoem-hearing.jpg';
+export { default as kilangPertamina } from './kilang-pertamina.jpg';
+export { default as lessential } from "./l'essential.jpg";
+export { default as merck } from './merck.jpg';
+export { default as nawaTech } from './nawa-tech.jpg';
