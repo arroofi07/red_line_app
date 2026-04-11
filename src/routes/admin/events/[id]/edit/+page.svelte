@@ -8,11 +8,7 @@
 	const itemId = $derived(page.params.id ?? '');
 
 	let title = $state('');
-	let subtitle = $state('');
-	let category = $state('');
-	let description = $state('');
 	let place = $state('');
-	let order = $state(0);
 	let imageFile = $state<File | null>(null);
 	let imagePreview = $state('');
 	let existingImageUrl = $state('');
@@ -23,8 +19,6 @@
 	let errors = $state<Record<string, string>>({});
 	let successMsg = $state('');
 
-	const CATEGORIES = ['Corporate Event', 'Exhibition', 'Conference', 'Music Festival', 'Government', 'Private Event'];
-
 	onMount(async () => {
 		try {
 			const item = await getEventById(itemId || '');
@@ -33,11 +27,7 @@
 				return;
 			}
 			title = item.title;
-			subtitle = item.subtitle || '';
-			category = item.category || '';
-			description = item.description || '';
 			place = item.place || '';
-			order = item.order;
 			existingImageUrl = item.imageUrl;
 			imagePreview = item.imageUrl;
 		} catch {
@@ -74,7 +64,6 @@
 	function validate(): boolean {
 		const e: Record<string, string> = {};
 		if (!title.trim()) e.title = 'Judul wajib diisi.';
-		if (!description.trim()) e.description = 'Deskripsi wajib diisi.';
 		errors = e;
 		return Object.keys(e).length === 0;
 	}
@@ -92,12 +81,8 @@
 
 			await updateEvent(itemId || '', {
 				title: title.trim(),
-				subtitle: subtitle.trim(),
-				category,
-				description: description.trim(),
 				place: place.trim(),
-				imageUrl,
-				order
+				imageUrl
 			});
 
 			successMsg = 'Event berhasil diperbarui! Mengarahkan...';
@@ -147,18 +132,6 @@
 				</div>
 
 				<div class="field">
-					<label class="label" for="subtitle">Subtitle</label>
-					<input id="subtitle" type="text" bind:value={subtitle} placeholder="Subtitle event..." class="input" />
-				</div>
-
-				<div class="field" class:has-error={errors.description}>
-					<label class="label" for="description">Deskripsi <span class="required">*</span></label>
-					<textarea id="description" bind:value={description} rows="5" placeholder="Deskripsi event..." class="input textarea"></textarea>
-					<span class="char-count">{description.length} karakter</span>
-					{#if errors.description}<span class="field-error">{errors.description}</span>{/if}
-				</div>
-
-				<div class="field">
 					<label class="label" for="place">Lokasi</label>
 					<input id="place" type="text" bind:value={place} placeholder="Lokasi event..." class="input" />
 				</div>
@@ -201,23 +174,6 @@
 					<input id="image-input" type="file" accept="image/*" onchange={handleImageChange} class="sr-only" />
 					{#if errors.image}<span class="field-error">{errors.image}</span>{/if}
 				</div>
-
-				<div class="side-card">
-					<h3 class="side-card-title">Klasifikasi</h3>
-					<div class="field">
-						<label class="label" for="category">Kategori</label>
-						<select id="category" bind:value={category} class="input select">
-							<option value="">— Pilih Kategori —</option>
-							{#each CATEGORIES as cat}
-								<option value={cat}>{cat}</option>
-							{/each}
-						</select>
-					</div>
-					<div class="field">
-						<label class="label" for="order">Order</label>
-						<input id="order" type="number" bind:value={order} min="0" class="input" />
-					</div>
-				</div>
 			</div>
 		</form>
 	{/if}
@@ -243,11 +199,7 @@
 	.required { color: #f87171; }
 	.input { width: 100%; padding: 0.7rem 0.875rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.625rem; color: white; font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color 0.2s; resize: none; }
 	.input:focus { border-color: rgba(220,38,38,0.5); }
-	.textarea { resize: vertical; line-height: 1.6; }
-	.select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
-	.select option { background: #1a1a1a; }
 	.field-error { font-size: 0.75rem; color: #f87171; }
-	.char-count { font-size: 0.72rem; color: rgba(255,255,255,0.3); text-align: right; }
 
 	.image-upload-zone { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.25rem 1rem; border: 2px dashed rgba(255,255,255,0.12); border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; text-align: center; }
 	.image-upload-zone:hover { border-color: rgba(220,38,38,0.4); background: rgba(220,38,38,0.05); }

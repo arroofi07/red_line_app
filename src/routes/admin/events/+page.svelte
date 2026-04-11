@@ -112,8 +112,6 @@
 					<tr>
 						<th>Event</th>
 						<th>Lokasi</th>
-						<th>Kategori</th>
-						<th>Order</th>
 						<th>Tanggal</th>
 						<th>Aksi</th>
 					</tr>
@@ -130,13 +128,10 @@
 									{/if}
 									<div class="cell-info">
 										<div class="cell-title">{item.title}</div>
-										<div class="cell-sub">{item.subtitle || item.description?.substring(0, 50) || '—'}</div>
 									</div>
 								</div>
 							</td>
 							<td class="text-cell">{item.place || '—'}</td>
-							<td><span class="badge-cat">{item.category || '—'}</span></td>
-							<td><span class="badge-order">{item.order}</span></td>
 							<td class="date-cell">{formatDate(item.createdAt)}</td>
 							<td>
 								<div class="action-wrap">
@@ -192,11 +187,8 @@
 	.thumb-placeholder { width: 52px; height: 52px; border-radius: 0.5rem; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
 	.cell-info { min-width: 0; }
 	.cell-title { font-size: 0.875rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
-	.cell-sub { font-size: 0.75rem; color: rgba(255,255,255,0.35); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
 
 	.text-cell { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
-	.badge-cat { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; background: rgba(220,38,38,0.15); color: #f87171; font-size: 0.72rem; font-weight: 700; white-space: nowrap; }
-	.badge-order { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); font-size: 0.72rem; font-weight: 600; }
 	.date-cell { color: rgba(255,255,255,0.4); font-size: 0.8rem; white-space: nowrap; }
 
 	.action-wrap { display: flex; gap: 0.5rem; }

@@ -6,8 +6,6 @@ import {
 	addDoc,
 	updateDoc,
 	deleteDoc,
-	query,
-	orderBy,
 	serverTimestamp,
 	type Timestamp
 } from 'firebase/firestore';
@@ -27,11 +25,21 @@ export type ProductionInput = Omit<Production, 'id' | 'createdAt' | 'updatedAt'>
 
 const COLLECTION = 'productions';
 
+function sortKey(p: Production): number {
+	const s = p.createdAt?.seconds;
+	return typeof s === 'number' ? s : 0;
+}
+
+/** Terbaru dulu; tanpa orderBy di Firestore agar tidak bergantung indeks / field order. */
 export async function getProductions(): Promise<Production[]> {
 	if (!isFirebaseConfigured || !db) return [];
-	const q = query(collection(db, COLLECTION), orderBy('order', 'asc'));
-	const snap = await getDocs(q);
-	return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Production);
+	const snap = await getDocs(collection(db, COLLECTION));
+	const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as Production);
+	return list.sort((a, b) => {
+		const diff = sortKey(b) - sortKey(a);
+		if (diff !== 0) return diff;
+		return b.id.localeCompare(a.id);
+	});
 }
 
 export async function getProductionById(id: string): Promise<Production | null> {

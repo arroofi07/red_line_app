@@ -4,8 +4,6 @@
 	import { uploadContentImage } from '$lib/firebase/storage';
 
 	let title = $state('');
-	let description = $state('');
-	let order = $state(0);
 	let imageFile = $state<File | null>(null);
 	let imagePreview = $state('');
 	let originalSize = $state(0);
@@ -58,9 +56,9 @@
 
 			await createProduction({
 				title: title.trim(),
-				description: description.trim(),
+				description: '',
 				imageUrl,
-				order
+				order: 0
 			});
 
 			successMsg = 'Production berhasil dibuat! Mengarahkan...';
@@ -105,12 +103,6 @@
 				<input id="title" type="text" bind:value={title} placeholder="Nama production..." class="input" />
 				{#if errors.title}<span class="field-error">{errors.title}</span>{/if}
 			</div>
-
-			<div class="field">
-				<label class="label" for="description">Deskripsi</label>
-				<textarea id="description" bind:value={description} rows="5" placeholder="Deskripsi production..." class="input textarea"></textarea>
-				<span class="char-count">{description.length} karakter</span>
-			</div>
 		</div>
 
 		<div class="form-col-side">
@@ -144,14 +136,6 @@
 				<input id="image-input" type="file" accept="image/*" onchange={handleImageChange} class="sr-only" />
 				{#if errors.image}<span class="field-error">{errors.image}</span>{/if}
 			</div>
-
-			<div class="side-card">
-				<h3 class="side-card-title">Urutan</h3>
-				<div class="field">
-					<label class="label" for="order">Order (angka kecil = tampil duluan)</label>
-					<input id="order" type="number" bind:value={order} min="0" class="input" />
-				</div>
-			</div>
 		</div>
 	</form>
 </div>
@@ -176,9 +160,7 @@
 	.required { color: #f87171; }
 	.input { width: 100%; padding: 0.7rem 0.875rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.625rem; color: white; font-size: 0.9rem; font-family: inherit; outline: none; transition: border-color 0.2s; resize: none; }
 	.input:focus { border-color: rgba(220,38,38,0.5); }
-	.textarea { resize: vertical; line-height: 1.6; }
 	.field-error { font-size: 0.75rem; color: #f87171; }
-	.char-count { font-size: 0.72rem; color: rgba(255,255,255,0.3); text-align: right; }
 
 	.image-upload-zone { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; padding: 1.5rem 1rem; border: 2px dashed rgba(255,255,255,0.12); border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; text-align: center; }
 	.image-upload-zone:hover { border-color: rgba(220,38,38,0.4); background: rgba(220,38,38,0.05); }

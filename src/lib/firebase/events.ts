@@ -6,8 +6,6 @@ import {
 	addDoc,
 	updateDoc,
 	deleteDoc,
-	query,
-	orderBy,
 	serverTimestamp,
 	type Timestamp
 } from 'firebase/firestore';
@@ -30,11 +28,21 @@ export type EventInput = Omit<EventItem, 'id' | 'createdAt' | 'updatedAt'>;
 
 const COLLECTION = 'events';
 
+function eventSortKey(e: EventItem): number {
+	const s = e.createdAt?.seconds;
+	return typeof s === 'number' ? s : 0;
+}
+
+/** Urutan: terbaru dulu (createdAt), tanpa query orderBy agar tidak bergantung indeks / field order. */
 export async function getEvents(): Promise<EventItem[]> {
 	if (!isFirebaseConfigured || !db) return [];
-	const q = query(collection(db, COLLECTION), orderBy('order', 'asc'));
-	const snap = await getDocs(q);
-	return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as EventItem);
+	const snap = await getDocs(collection(db, COLLECTION));
+	const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }) as EventItem);
+	return list.sort((a, b) => {
+		const diff = eventSortKey(b) - eventSortKey(a);
+		if (diff !== 0) return diff;
+		return b.id.localeCompare(a.id);
+	});
 }
 
 export async function getEventById(id: string): Promise<EventItem | null> {
