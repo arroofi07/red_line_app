@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { getBlogs, type Blog } from '$lib/firebase/blogs';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { breadcrumbSchema } from '$lib/seo/schemas';
 
 	let blogs = $state<Blog[]>([]);
 	let loading = $state(true);
@@ -54,13 +56,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Blog & Insight — Redline Communication</title>
-	<meta
-		name="description"
-		content="Tips, tren, dan studi kasus seputar event organizer, MICE, dan strategic communication dari tim Redline Communication."
-	/>
-</svelte:head>
+<Seo
+	title="Blog & Insight Event Organizer | Redline Communication Padang"
+	description="Tips, tren, dan studi kasus seputar event organizer, event production, MICE, dan strategic communication dari tim EO Padang - Redline Communication."
+	jsonLd={breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Blog', url: 'https://redlinecomunication.com/blogs' }])}
+/>
 
 <section class="blogs-page" bind:this={sectionEl}>
 	<!-- BG decoration -->

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { breadcrumbSchema } from '$lib/seo/schemas';
 	import {
 		biofarma,
 		bgpIndonesia,
@@ -98,13 +100,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Production | REDLINE Communication</title>
-	<meta
-		name="description"
-		content="Production Redline - Spesialis produksi event profesional Menyediakan solusi kreatif, teknis, dan visual untuk acara spektakuler!"
-	/>
-</svelte:head>
+<Seo
+	title="Event Production Padang | Booth, Panggung & Teknis | Redline Communication"
+	description="Jasa event production Padang profesional. Custom booth, panggung, sound system, lighting, dan perlengkapan event. Redline Production - dari ide menjadi nyata."
+	jsonLd={breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Production', url: 'https://redlinecomunication.com/production-redline' }])}
+/>
 
 <main class="production-page">
 	<!-- ══ HERO SECTION ══ -->

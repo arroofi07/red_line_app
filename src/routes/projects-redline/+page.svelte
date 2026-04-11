@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { breadcrumbSchema } from '$lib/seo/schemas';
 	import {
 		aquaElectronic,
 		aslabkesda,
@@ -212,13 +214,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Projects & Events | REDLINE Communication</title>
-	<meta
-		name="description"
-		content="Portofolio project dan event yang telah dikerjakan oleh Redline Communication, event organizer profesional."
-	/>
-</svelte:head>
+<Seo
+	title="Portofolio Event & Project | EO Padang - Redline Communication"
+	description="Lihat portofolio event yang telah berhasil diselenggarakan oleh Redline Communication, event organizer Padang. 200+ event sukses dari Pertamina, Bank Nagari, dan lainnya."
+	jsonLd={breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Projects & Events', url: 'https://redlinecomunication.com/projects-redline' }])}
+/>
 
 <main class="events-page">
 	<!-- ══ HERO SECTION ══ -->

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { breadcrumbSchema, localBusinessSchema } from '$lib/seo/schemas';
 
 	let mounted = $state(false);
 	let heroVisible = $state(false);
@@ -68,13 +70,11 @@
 	};
 </script>
 
-<svelte:head>
-	<title>Contact Us | REDLINE Communication</title>
-	<meta
-		name="description"
-		content="Tunggu apa lagi? Ayo segera konsultasikan kebutuhan event mu bersama kami di Redline Communication."
-	/>
-</svelte:head>
+<Seo
+	title="Hubungi EO Padang - Redline Communication | Konsultasi Event Gratis"
+	description="Hubungi Redline Communication untuk konsultasi event gratis. EO Padang profesional siap membantu kebutuhan event Anda. WhatsApp: 0811-663-528. Kantor: Padang, Sumatera Barat."
+	jsonLd={[breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Contact', url: 'https://redlinecomunication.com/contact-redline' }]), localBusinessSchema()]}
+/>
 
 <main class="contact-page">
 	<!-- ══ HERO SECTION ══ -->

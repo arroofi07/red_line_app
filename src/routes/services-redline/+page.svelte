@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly } from 'svelte/transition';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { breadcrumbSchema } from '$lib/seo/schemas';
 	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
 	import Clapperboard from 'lucide-svelte/icons/clapperboard';
 	import Package from 'lucide-svelte/icons/package';
@@ -106,10 +108,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>Our Services | REDLINE Communication</title>
-	<meta name="description" content="Explore the wide range of services offered by Redline Communication, from Event Organizing to Production and Creative Agency." />
-</svelte:head>
+<Seo
+	title="Layanan Event Organizer & Production Padang | Redline Communication"
+	description="Layanan lengkap event organizer Padang: EO profesional, event production, rental equipment, creative agency, show management, dan advertising. Hubungi Redline Communication."
+	jsonLd={breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Services', url: 'https://redlinecomunication.com/services-redline' }])}
+/>
 
 <main class="services-page">
 	<!-- ══ HERO SECTION ══ -->

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { organizationSchema, breadcrumbSchema } from '$lib/seo/schemas';
 
 	let mounted = $state(false);
 	let heroVisible = $state(false);
@@ -74,13 +76,11 @@
 	});
 </script>
 
-<svelte:head>
-	<title>About Us | REDLINE Communication</title>
-	<meta
-		name="description"
-		content="Redline Communication adalah perusahaan Full Integrated Marketing Communication yang bergerak di bidang Event Organizer berpengalaman lebih dari 12 tahun."
-	/>
-</svelte:head>
+<Seo
+	title="Tentang Redline Communication | Event Organizer Padang Berpengalaman"
+	description="Redline Communication adalah perusahaan Full Integrated Marketing Communication dan Event Organizer di Padang, Sumatera Barat. Berpengalaman 12+ tahun dengan 200+ event sukses."
+	jsonLd={[organizationSchema(), breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'About Us', url: 'https://redlinecomunication.com/about-redline-communication' }])]}
+/>
 
 <main class="about-page">
 	<!-- ══ HERO SECTION ══ -->

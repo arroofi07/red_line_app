@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import lldikti from '$lib/assets/event-page/lldikti.png';
+	import { lldikti } from '$lib/assets/event-page';
 
 	let mounted = $state(false);
 

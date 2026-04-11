@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { getBlogBySlug, getBlogs, type Blog } from '$lib/firebase/blogs';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { blogPostingSchema, breadcrumbSchema } from '$lib/seo/schemas';
 
 	const slug = $derived(page.params.slug);
 
@@ -53,19 +55,28 @@
 	});
 </script>
 
-<svelte:head>
-	{#if blog}
-		<title>{blog.title} — Redline Communication</title>
-		<meta name="description" content={blog.excerpt} />
-		<meta property="og:title" content={blog.title} />
-		<meta property="og:description" content={blog.excerpt} />
-		{#if blog.imageUrl}
-			<meta property="og:image" content={blog.imageUrl} />
-		{/if}
-	{:else}
-		<title>Artikel — Redline Communication</title>
-	{/if}
-</svelte:head>
+{#if blog}
+	<Seo
+		title="{blog.title} — Redline Communication"
+		description={blog.excerpt}
+		ogType="article"
+		ogImage={blog.imageUrl || undefined}
+		article={{
+			publishedTime: blog.publishedAt?.seconds ? new Date(blog.publishedAt.seconds * 1000).toISOString() : undefined,
+			author: blog.author,
+			section: blog.category
+		}}
+		jsonLd={[
+			blogPostingSchema({ title: blog.title, excerpt: blog.excerpt, imageUrl: blog.imageUrl, author: blog.author, publishedAt: blog.publishedAt, slug: blog.slug }),
+			breadcrumbSchema([{ name: 'Home', url: 'https://redlinecomunication.com' }, { name: 'Blog', url: 'https://redlinecomunication.com/blogs' }, { name: blog.category, url: 'https://redlinecomunication.com/blogs' }])
+		]}
+	/>
+{:else}
+	<Seo
+		title="Artikel — Redline Communication"
+		description="Baca artikel terbaru dari Redline Communication, event organizer Padang."
+	/>
+{/if}
 
 <div class="article-page">
 	<!-- BG -->

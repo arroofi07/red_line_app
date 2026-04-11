@@ -48,6 +48,7 @@
 
 <svelte:head>
 	<title>Admin — Redline Communication</title>
+	<meta name="robots" content="noindex, nofollow" />
 </svelte:head>
 
 {#if !isAuthenticated}

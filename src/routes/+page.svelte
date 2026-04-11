@@ -7,15 +7,15 @@
 	import Post from '$lib/components/sections/post.svelte';
 	import Gallery from '$lib/components/sections/gallery.svelte';
 	import Metaverse from '$lib/components/sections/metaverse.svelte';
+	import Seo from '$lib/components/seo/Seo.svelte';
+	import { organizationSchema, localBusinessSchema } from '$lib/seo/schemas';
 </script>
 
-<svelte:head>
-	<title>REDLINE | Event Organizer & Strategic Communication</title>
-	<meta
-		name="description"
-		content="Redline Communication (EO Padang) — one stop solution for all your event needs. From event organizer, management, production, MICE, and more."
-	/>
-</svelte:head>
+<Seo
+	title="EO Padang - Redline Communication | Event Organizer & Production Padang"
+	description="Redline Communication - Event Organizer Padang terbaik. Jasa EO Padang profesional untuk event organizer, event production, MICE, dan supplier equipment. Berpengalaman 12+ tahun."
+	jsonLd={[organizationSchema(), localBusinessSchema()]}
+/>
 
 <main class="flex flex-col bg-background">
 	<Hero />
