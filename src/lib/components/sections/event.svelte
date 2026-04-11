@@ -166,7 +166,7 @@
 				<p class="description">{projects[activeIndex].description}</p>
 
 				<div class="actions">
-					<button class="cta-btn cursor-pointer shadow-lg shadow-white hover:bg-black">
+					<button class="cta-btn cursor-pointer shadow-lg hover:bg-black">
 						<span>More Event</span>
 					</button>
 
