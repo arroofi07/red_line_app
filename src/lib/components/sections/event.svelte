@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
+	import { bankNagari, perdami, pertamina } from '$lib/assets/event-page';
 
 	let activeIndex = $state(0);
 	let startX = 0;
@@ -13,8 +13,7 @@
 			category: 'Corporate Conference',
 			description:
 				'An immersive experience for global leaders to connect and innovate in the heart of the tech world.',
-			image:
-				'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=90',
+			image: pertamina,
 			accent: '#C9A96E',
 			tag: '01'
 		},
@@ -24,8 +23,7 @@
 			category: 'Music Festival',
 			description:
 				'The ultimate music festival experience, featuring top international artists and cutting-edge stage production.',
-			image:
-				'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=1200&q=90',
+			image: bankNagari,
 			accent: '#E05C5C',
 			tag: '02'
 		},
@@ -35,8 +33,7 @@
 			category: 'Exhibition',
 			description:
 				'Showcasing the future of technology, from AI and robotics to sustainable energy solutions.',
-			image:
-				'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=90',
+			image: perdami,
 			accent: '#6EA8C9',
 			tag: '03'
 		}

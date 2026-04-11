@@ -1,0 +1,12 @@
+export { default as aquaElectronic } from './aqua-electronic.png';
+export { default as aslabkesda } from './aslabkesda.png';
+export { default as bankNagari } from './bank-nagari.png';
+export { default as gagNikel } from './gag-nikel.png';
+export { default as kemenkumham } from './kemenkumham.png';
+export { default as korpsSumbarRiauKepri } from './korps-sumbar-riau-kepri.png';
+export { default as lldikti } from './LLDIKTI.png';
+export { default as mandalaFinance } from './mandala-finance.png';
+export { default as perdami } from './perdami.png';
+export { default as pertamina } from './pertamina.png';
+export { default as pertaminaHuluEnergi } from './pertamina-hulu-energi.png';
+export { default as politeknikAtiPadang } from './politeknik-ati-padang.png';

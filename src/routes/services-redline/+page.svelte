@@ -1,65 +1,81 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fade, fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 	import CalendarCheck from 'lucide-svelte/icons/calendar-check';
 	import Clapperboard from 'lucide-svelte/icons/clapperboard';
 	import Package from 'lucide-svelte/icons/package';
 	import Zap from 'lucide-svelte/icons/zap';
 	import Mic from 'lucide-svelte/icons/mic';
 	import Megaphone from 'lucide-svelte/icons/megaphone';
+	import {
+		eventOrganizerGallery,
+		eventProductionGallery,
+		eventEquipmentRentalGallery
+	} from '$lib/assets/sevices-page';
 
 	let mounted = $state(false);
-	let heroVisible = $state(false);
-	let servicesVisible = $state(false);
+	let showcaseVisible = $state(false);
+	let moreVisible = $state(false);
 	let ctaVisible = $state(false);
 
-	let heroEl: HTMLElement;
-	let servicesEl: HTMLElement;
+	let showcaseEl: HTMLElement;
+	let moreEl: HTMLElement;
 	let ctaEl: HTMLElement;
 
-	const services = [
+	const featuredServices = [
 		{
 			id: 'eo',
 			title: 'Event Organizer',
 			subtitle: 'Professional Organizer',
-			description: 'Jasa penyelenggara event yang telah berpengalaman selama lebih dari 12 tahun. Kami telah sukses menyelenggarakan berbagai jenis event, dan selanjutnya adalah event anda!',
+			description:
+				'Jasa penyelenggara event yang telah berpengalaman selama lebih dari 12 tahun. Kami telah sukses menyelenggarakan berbagai jenis event, dan selanjutnya adalah event anda!',
 			icon: CalendarCheck,
-			image: 'https://redlinecomunication.com/wp-content/uploads/2024/04/299508498_144728874564258_7146119662636100457_n-1-1024x768.png',
+			gallery: eventOrganizerGallery
 		},
 		{
 			id: 'production',
 			title: 'Event Production',
 			subtitle: 'Idea Reality',
-			description: 'Divisi produksi event dari Redline Communication. Redline Production hadir sebagai jawaban untuk merubah ide anda menjadi nyata.',
+			description:
+				'Divisi produksi event dari Redline Communication. Redline Production hadir sebagai jawaban untuk merubah ide anda menjadi nyata.',
 			icon: Clapperboard,
+			gallery: eventProductionGallery
 		},
 		{
 			id: 'rental',
-			title: 'Equipment Rental',
+			title: 'Event Equipment Rental',
 			subtitle: 'Small to Large Scale',
-			description: 'Kami juga menyediakan jasa sewa alat/perlengkapan event anda, skala kecil ataupun besar kami siap menyediakannya.',
+			description:
+				'Kami juga menyediakan jasa sewa alat/perlengkapan event anda, skala kecil ataupun besar kami siap menyediakannya.',
 			icon: Package,
-		},
+			gallery: eventEquipmentRentalGallery
+		}
+	];
+
+	const moreServices = [
 		{
 			id: 'creative',
 			title: 'Creative Agency',
 			subtitle: 'Branding & Activation',
-			description: 'Divisi kreatif dari Redline Communication, untuk jawaban segala kebutuhan kreatif anda dan program aktivasi brand.',
-			icon: Zap,
+			description:
+				'Divisi kreatif dari Redline Communication, untuk jawaban segala kebutuhan kreatif anda dan program aktivasi brand.',
+			icon: Zap
 		},
 		{
 			id: 'management',
 			title: 'Show Management',
 			subtitle: 'Sit Back & Relax',
-			description: 'Anda hanya perlu menikmati pertunjukan yang kami sediakan. Kami mengelola flow acara dari awal hingga akhir.',
-			icon: Mic,
+			description:
+				'Anda hanya perlu menikmati pertunjukan yang kami sediakan. Kami mengelola flow acara dari awal hingga akhir.',
+			icon: Mic
 		},
 		{
 			id: 'advertising',
 			title: 'Advertising',
 			subtitle: 'Business Growth',
-			description: 'Biarkan kami meningkatkan upaya periklanan Anda dan melihat bisnis Anda berkembang pesat melalui media yang tepat.',
-			icon: Megaphone,
+			description:
+				'Biarkan kami meningkatkan upaya periklanan Anda dan melihat bisnis Anda berkembang pesat melalui media yang tepat.',
+			icon: Megaphone
 		}
 	];
 
@@ -81,8 +97,8 @@
 		};
 
 		const cleanups = [
-			createObserver(heroEl, (v) => (heroVisible = v)),
-			createObserver(servicesEl, (v) => (servicesVisible = v)),
+			createObserver(showcaseEl, (v) => (showcaseVisible = v)),
+			createObserver(moreEl, (v) => (moreVisible = v)),
 			createObserver(ctaEl, (v) => (ctaVisible = v))
 		];
 
@@ -97,7 +113,7 @@
 
 <main class="services-page">
 	<!-- ══ HERO SECTION ══ -->
-	<section class="services-hero" bind:this={heroEl}>
+	<section class="services-hero">
 		<div class="hero-bg" aria-hidden="true"></div>
 		<div class="blob b1" aria-hidden="true"></div>
 		<div class="blob b2" aria-hidden="true"></div>
@@ -142,10 +158,10 @@
 		<div class="fade-bottom" aria-hidden="true"></div>
 	</section>
 
-	<!-- ══ SERVICES LIST GRID ══ -->
-	<section id="services-list" class="services-section" bind:this={servicesEl}>
-		<div class="services-container">
-			<div class="section-header" class:visible={servicesVisible}>
+	<!-- ══ CORE SERVICES (with imagery) ══ -->
+	<section id="services-list" class="services-showcase" bind:this={showcaseEl}>
+		<div class="showcase-container">
+			<div class="section-header" class:visible={showcaseVisible}>
 				<div class="section-label">OUR EXPERTISE</div>
 				<h2 class="section-title">
 					Pilihan Layanan <span class="text-primary">Yang Luas</span>
@@ -155,20 +171,55 @@
 				</p>
 			</div>
 
-			<div class="services-grid">
-				{#each services as service, i}
-					<div class="service-card" class:visible={servicesVisible} style="--delay: {(i % 3) * 150}ms">
-						{#if service.image}
-							<div class="sc-image-wrap">
-								<img src={service.image} alt={service.title} loading="lazy" />
-								<div class="sc-overlay"></div>
+			<div class="showcase-list">
+				{#each featuredServices as service, i (service.id)}
+					<article
+						class="showcase-block"
+						class:visible={showcaseVisible}
+						style="--delay: {i * 120}ms"
+					>
+						<div class="showcase-intro">
+							<div class="showcase-intro-icon" aria-hidden="true">
+								<service.icon class="showcase-intro-icon-svg" />
 							</div>
-						{/if}
+							<div class="showcase-copy">
+								<span class="showcase-index">0{i + 1}</span>
+								<h3 class="showcase-title">{service.title}</h3>
+								<p class="showcase-subtitle">{service.subtitle}</p>
+								<p class="showcase-desc">{service.description}</p>
+							</div>
+						</div>
+						<div class="showcase-gallery">
+							{#each service.gallery as item (item.src)}
+								<figure class="showcase-gal-cell">
+									<img src={item.src} alt={item.alt} class="showcase-gal-img" loading="lazy" />
+								</figure>
+							{/each}
+						</div>
+					</article>
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<!-- ══ MORE SERVICES ══ -->
+	<section class="services-section services-more" bind:this={moreEl}>
+		<div class="services-container">
+			<div class="section-header section-header--compact" class:visible={moreVisible}>
+				<div class="section-label">ALSO AVAILABLE</div>
+				<h2 class="section-title section-title--sm">
+					Layanan <span class="text-primary">Pelengkap</span>
+				</h2>
+			</div>
+
+			<div class="services-grid">
+				{#each moreServices as service, i (service.id)}
+					<div class="service-card" class:visible={moreVisible} style="--delay: {(i % 3) * 150}ms">
 						<div class="sc-content">
 							<div class="sc-icon-wrap">
-                                <service.icon class="sc-icon" />
+								<service.icon class="sc-icon" />
 							</div>
-							<div class="sc-number">0{i + 1}</div>
+							<div class="sc-number">0{i + 4}</div>
 							<h3 class="sc-title">{service.title}</h3>
 							<div class="sc-subtitle">{service.subtitle}</div>
 							<p class="sc-desc">{service.description}</p>
@@ -296,9 +347,155 @@
 	.section-label { font-size: 0.8rem; font-weight: 600; color: var(--primary); letter-spacing: 0.2em; margin-bottom: 1rem; }
 	.section-title { font-family: var(--font-display), sans-serif; font-size: 3rem; margin: 0 0 1rem; text-transform: uppercase; line-height: 1.1; }
 	.section-desc { color: rgba(255,255,255,0.6); max-width: 600px; margin: 0; line-height: 1.6; }
+	.section-header--compact { margin-bottom: 2.5rem; }
+	.section-title--sm { font-size: clamp(1.75rem, 4vw, 2.5rem); }
 
-	/* ── Services Grid ── */
-	.services-section { padding: 4rem 1.5rem 6rem; position: relative; }
+	/* ── Featured services (copy + full gallery) ── */
+	.services-showcase {
+		padding: 4rem 1.5rem 2rem;
+		position: relative;
+	}
+	.showcase-container {
+		max-width: 1200px;
+		margin: 0 auto;
+	}
+	.showcase-list {
+		display: flex;
+		flex-direction: column;
+		gap: clamp(3rem, 6vw, 5rem);
+		margin-top: 1rem;
+	}
+	.showcase-block {
+		opacity: 0;
+		transform: translateY(28px);
+		transition:
+			opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--delay),
+			transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1) var(--delay);
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	}
+	.showcase-block:last-child {
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+	.showcase-block.visible {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	.showcase-intro {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin-bottom: 1.5rem;
+		align-items: start;
+	}
+	@media (min-width: 640px) {
+		.showcase-intro {
+			grid-template-columns: auto 1fr;
+			gap: 1.5rem;
+			margin-bottom: 1.75rem;
+		}
+	}
+	.showcase-intro-icon {
+		width: 3.5rem;
+		height: 3.5rem;
+		border-radius: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: rgba(220, 38, 38, 0.12);
+		border: 1px solid rgba(220, 38, 38, 0.25);
+		flex-shrink: 0;
+	}
+	:global(.showcase-intro-icon-svg) {
+		width: 1.75rem;
+		height: 1.75rem;
+		color: var(--primary);
+	}
+	.showcase-copy {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.5rem;
+		padding: 0.25rem 0;
+		min-width: 0;
+	}
+	.showcase-index {
+		font-family: var(--font-display), sans-serif;
+		font-size: clamp(3rem, 8vw, 4.5rem);
+		line-height: 1;
+		color: rgba(255, 255, 255, 0.06);
+		position: absolute;
+		top: -0.5rem;
+		left: 0;
+		pointer-events: none;
+	}
+	.showcase-title {
+		font-family: var(--font-display), sans-serif;
+		font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+		margin: 0;
+		text-transform: uppercase;
+		line-height: 1.1;
+		position: relative;
+		z-index: 1;
+	}
+	.showcase-subtitle {
+		margin: 0;
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--primary);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+	.showcase-desc {
+		margin: 0.5rem 0 0;
+		font-size: 1.05rem;
+		line-height: 1.65;
+		color: rgba(255, 255, 255, 0.55);
+		max-width: 40rem;
+	}
+	.showcase-gallery {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.65rem;
+	}
+	@media (min-width: 520px) {
+		.showcase-gallery {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.75rem;
+		}
+	}
+	@media (min-width: 900px) {
+		.showcase-gallery {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 1rem;
+		}
+	}
+	.showcase-gal-cell {
+		margin: 0;
+		position: relative;
+		border-radius: 0.75rem;
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+		background: rgba(0, 0, 0, 0.35);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	.showcase-gal-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		transition: transform 0.55s ease;
+	}
+	.showcase-gal-cell:hover .showcase-gal-img,
+	.showcase-gal-cell:focus-within .showcase-gal-img {
+		transform: scale(1.04);
+	}
+
+	/* ── Services Grid (secondary) ── */
+	.services-section { padding: 3rem 1.5rem 6rem; position: relative; }
+	.services-more { padding-top: 2rem; }
 	.services-container { max-width: 1200px; margin: 0 auto; }
 
 	.services-grid {
@@ -316,22 +513,11 @@
 		background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 1.5rem;
 		overflow: hidden; opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--delay);
 		display: flex; flex-direction: column;
+		min-height: 100%;
 	}
 	.service-card.visible { opacity: 1; transform: translateY(0); }
 	.service-card:hover {
 		border-color: rgba(220,38,38,0.4); background: rgba(255,255,255,0.05); transform: translateY(-5px);
-	}
-
-	.sc-image-wrap {
-		width: 100%; height: 200px; overflow: hidden; position: relative;
-	}
-	.sc-image-wrap img {
-		width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
-	}
-	.service-card:hover .sc-image-wrap img { transform: scale(1.05); }
-
-	.sc-overlay {
-		position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
 	}
 
 	.sc-content { padding: 2rem; display: flex; flex-direction: column; flex: 1; position: relative; z-index: 2; }

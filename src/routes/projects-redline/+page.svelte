@@ -1,6 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
+	import {
+		aquaElectronic,
+		aslabkesda,
+		bankNagari,
+		kemenkumham,
+		lldikti,
+		perdami,
+		pertamina,
+		pertaminaHuluEnergi,
+		politeknikAtiPadang
+	} from '$lib/assets/event-page';
 
 	let mounted = $state(false);
 	let heroVisible = $state(false);
@@ -15,15 +26,15 @@
 	let ctaEl: HTMLElement;
 
 	const latestProjects = [
-		{ title: 'PERTAMINA DTEC CONNECT 4.0', place: 'The Balcone Hotel Bukittinggi', image: 'https://redlinecomunication.com/wp-content/uploads/2024/12/proj-15_1.png' },
-		{ title: 'Bank Nagari Inspiring Leader', place: 'Santika Premiere Hotel Padang', image: 'https://redlinecomunication.com/wp-content/uploads/2024/12/proj-14.png' },
-		{ title: 'Symposium PERDAMI', place: 'ZHM Padang', image: 'https://redlinecomunication.com/wp-content/uploads/2024/10/proj-13.png' },
-		{ title: 'PERTAMINA Goes to Campus', place: 'PERTAMINA - UNAND', image: 'https://redlinecomunication.com/wp-content/uploads/2024/10/proj-12.png' },
-		{ title: 'Dealer Gathering', place: 'AQUA ELECTRONICS', image: 'https://redlinecomunication.com/wp-content/uploads/2024/10/proj-11.png' },
-		{ title: 'Pameran Layanan Hukum', place: 'KEMENKUMHAM - Padang', image: 'https://redlinecomunication.com/wp-content/uploads/2024/10/proj-10.png' },
-		{ title: 'Rakernas 2 & Forum Ilmiah 3', place: 'ASLABKESDA', image: 'https://redlinecomunication.com/wp-content/uploads/2024/07/proj-7@300x.png' },
-		{ title: 'Kampus Merdeka Fair', place: 'LLDIKTI', image: 'https://redlinecomunication.com/wp-content/uploads/2024/07/proj-8@300x.png' },
-		{ title: 'Anugerah 50th', place: 'Politeknik ATI Padang', image: 'https://redlinecomunication.com/wp-content/uploads/2024/07/proj-9@300x.png' }
+		{ title: 'PERTAMINA DTEC CONNECT 4.0', place: 'The Balcone Hotel Bukittinggi', image: pertamina },
+		{ title: 'Bank Nagari Inspiring Leader', place: 'Santika Premiere Hotel Padang', image: bankNagari },
+		{ title: 'Symposium PERDAMI', place: 'ZHM Padang', image: perdami },
+		{ title: 'PERTAMINA Goes to Campus', place: 'PERTAMINA - UNAND', image: pertaminaHuluEnergi },
+		{ title: 'Dealer Gathering', place: 'AQUA ELECTRONICS', image: aquaElectronic },
+		{ title: 'Pameran Layanan Hukum', place: 'KEMENKUMHAM - Padang', image: kemenkumham },
+		{ title: 'Rakernas 2 & Forum Ilmiah 3', place: 'ASLABKESDA', image: aslabkesda },
+		{ title: 'Kampus Merdeka Fair', place: 'LLDIKTI', image: lldikti },
+		{ title: 'Anugerah 50th', place: 'Politeknik ATI Padang', image: politeknikAtiPadang }
 	];
 
 	const historicalHighlights = [
@@ -276,11 +287,6 @@
 					<div class="project-card" class:visible={projectsVisible} style="--delay: {(i % 3) * 150}ms">
 						<div class="pc-image-wrap">
 							<img src={project.image} alt={project.title} loading="lazy" />
-							<div class="pc-overlay">
-								<a href="https://redlinecomunication.com/projects-redline/" target="_blank" rel="noopener" class="pc-link-btn">
-									View Detail
-								</a>
-							</div>
 						</div>
 						<div class="pc-content">
 							<h3 class="pc-title">{project.title}</h3>
