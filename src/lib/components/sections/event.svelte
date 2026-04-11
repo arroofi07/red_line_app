@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { bankNagari, perdami, pertamina } from '$lib/assets/event-page';
+	import {
+		bankNagari,
+		perdami,
+		pertamina,
+		kemenkumham,
+		politeknikAtiPadang,
+		aquaElectronic
+	} from '$lib/assets/event-page';
 
 	let activeIndex = $state(0);
 	let startX = 0;
@@ -8,34 +15,64 @@
 
 	const projects = [
 		{
-			title: 'Aura Summit',
-			subtitle: '2024',
+			title: 'Dealer Gathering',
+			subtitle: 'Expo',
+			category: 'Exhibition',
+			description:
+				'Showcasing the future of technology, from AI and robotics to sustainable energy solutions.',
+			image: aquaElectronic,
+			accent: '#E05C5C',
+			tag: '01'
+		},
+		{
+			title: 'PERTAMINA DTEC CONNECT 4.0',
+			subtitle: 'Conference',
 			category: 'Corporate Conference',
 			description:
 				'An immersive experience for global leaders to connect and innovate in the heart of the tech world.',
 			image: pertamina,
 			accent: '#C9A96E',
-			tag: '01'
+			tag: '02'
 		},
 		{
-			title: 'Red Line',
-			subtitle: 'LIVE',
+			title: 'Bank Nagari Inspiring Leader',
+			subtitle: 'Festival',
 			category: 'Music Festival',
 			description:
 				'The ultimate music festival experience, featuring top international artists and cutting-edge stage production.',
 			image: bankNagari,
 			accent: '#E05C5C',
-			tag: '02'
+			tag: '03'
 		},
 		{
-			title: 'Global Tech',
+			title: 'Symposium PERDAMI',
 			subtitle: 'Expo',
 			category: 'Exhibition',
 			description:
 				'Showcasing the future of technology, from AI and robotics to sustainable energy solutions.',
 			image: perdami,
 			accent: '#6EA8C9',
-			tag: '03'
+			tag: '04'
+		},
+		{
+			title: 'Pameran Layanan Hukum',
+			subtitle: 'Expo',
+			category: 'Exhibition',
+			description:
+				'Showcasing the future of technology, from AI and robotics to sustainable energy solutions.',
+			image: kemenkumham,
+			accent: '#E05C5C',
+			tag: '05'
+		},
+		{
+			title: 'Politeknik ATI Padang',
+			subtitle: 'Expo',
+			category: 'Exhibition',
+			description:
+				'Showcasing the future of technology, from AI and robotics to sustainable energy solutions.',
+			image: politeknikAtiPadang,
+			accent: '#E05C5C',
+			tag: '06'
 		}
 	];
 

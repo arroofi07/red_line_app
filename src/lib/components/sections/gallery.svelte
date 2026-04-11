@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { cn } from '$lib/utils';
-	import gallery1 from '$lib/assets/gallery_1.png';
-	import gallery2 from '$lib/assets/gallery_2.png';
-	import gallery3 from '$lib/assets/gallery_3.png';
-	import gallery4 from '$lib/assets/gallery_4.png';
+	import {
+		bankNagari,
+		gagNikel,
+		kemenkumham,
+		mandalaFinance,
+		perdami,
+		pertamina
+	} from '$lib/assets/event-page';
 
 	let mounted = $state(false);
 
@@ -14,10 +17,12 @@
 	});
 
 	const items = [
-		{ image: gallery1, title: 'VR Reality', class: 'col-span-2 row-span-2' },
-		{ image: gallery2, title: 'Virtual Meeting', class: 'col-span-1 row-span-1' },
-		{ image: gallery3, title: 'Hologram Show', class: 'col-span-1 row-span-1' },
-		{ image: gallery4, title: 'Digital Festival', class: 'col-span-2 row-span-1' }
+		{ image: pertamina, title: 'Pertamina' },
+		{ image: bankNagari, title: 'Bank Nagari' },
+		{ image: kemenkumham, title: 'Kemenkumham' },
+		{ image: perdami, title: 'PERDAMI' },
+		{ image: mandalaFinance, title: 'Mandala Finance' },
+		{ image: gagNikel, title: 'GAG Nikel' }
 	];
 </script>
 
@@ -33,21 +38,20 @@
 				{/if}
 			</div>
 
-			<!-- Masonry-style Grid -->
-			<div class="grid grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[200px] md:auto-rows-[300px]">
-				{#each items as item, i}
+			<!-- Event client highlights from event-page assets -->
+			<div
+				class="grid grid-cols-2 gap-6 auto-rows-[200px] md:auto-rows-[260px] lg:grid-cols-3"
+			>
+				{#each items as item, i (item.title)}
 					{#if mounted}
-						<div 
-							in:fade={{ duration: 1000, delay: i * 150 }} 
-							class={cn(
-								"relative rounded-[32px] overflow-hidden group border border-white/10 bg-black/40 shadow-2xl transition-all duration-500 hover:border-primary/50",
-								item.class
-							)}
+						<div
+							in:fade={{ duration: 1000, delay: i * 150 }}
+							class="group relative overflow-hidden rounded-[32px] border border-white/10 bg-black/40 shadow-2xl transition-all duration-500 hover:border-primary/50"
 						>
 							<img
 								src={item.image}
 								alt={item.title}
-								class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+								class="h-full w-full object-contain p-6 md:p-8 transition-transform duration-700 group-hover:scale-105"
 							/>
 							<!-- Overlay -->
 							<div class="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8">

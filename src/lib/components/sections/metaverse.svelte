@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
-	import metaverseCity from '$lib/assets/metaverse_city.png';
+	import lldikti from '$lib/assets/event-page/lldikti.png';
 
 	let mounted = $state(false);
 
@@ -16,11 +16,11 @@
 			<!-- Visual Content -->
 			<div class="order-2 lg:order-1 relative flex items-center justify-center">
 				{#if mounted}
-					<div in:fade={{ duration: 1500 }} class="relative z-10 w-full max-w-xl">
+					<div in:fade={{ duration: 1500 }} class="relative z-10 w-full rounded-3xl border border-white/10 max-w-xl">
 						<img
-							src={metaverseCity}
-							alt="Metaverse City"
-							class="h-auto w-full object-contain drop-shadow-[0_0_60px_rgba(220,38,38,0.15)]"
+							src={lldikti}
+							alt="LLDIKTI"
+							class="h-auto w-full rounded-3xl p-4 object-contain drop-shadow-[0_0_60px_rgba(220,38,38,0.15)]"
 						/>
 						
 						<!-- Decorative Glow -->
