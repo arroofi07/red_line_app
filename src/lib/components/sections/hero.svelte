@@ -2,7 +2,6 @@
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { Button } from '$lib/components/ui/button';
-	import bankNagari from '$lib/assets/event-page/bank-nagari.png';
 
 	let mounted = $state(false);
 	let rotation = $state(0);
@@ -195,12 +194,353 @@
 								<div class="figure-glow-red"></div>
 								<div class="figure-glow-red-secondary"></div>
 
-								<!-- Hero Illustration -->
-								<img
-									src={bankNagari}
-									alt="Professional Event Organizer Illustration"
-									class="hero-character absolute bottom-0 left-1/2 z-10 h-full w-full -translate-x-1/2 object-contain py-2"
-								/>
+								<!-- Hero Illustration: Concert Stage (Audience POV) -->
+								<svg
+									viewBox="0 0 400 500"
+									width="100%"
+									height="100%"
+									preserveAspectRatio="xMidYMid slice"
+									xmlns="http://www.w3.org/2000/svg"
+									aria-label="Concert Event Stage Illustration"
+									role="img"
+									class="absolute inset-0 z-10"
+								>
+									<defs>
+										<!-- Deep background -->
+										<radialGradient id="h-bg" cx="50%" cy="55%" r="65%" gradientUnits="objectBoundingBox">
+											<stop offset="0%" stop-color="#150604"/>
+											<stop offset="100%" stop-color="#060b18"/>
+										</radialGradient>
+										<!-- Screen glow emission -->
+										<radialGradient id="h-scr-emit" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+											<stop offset="0%" stop-color="#C8391C" stop-opacity="0.22"/>
+											<stop offset="100%" stop-color="#C8391C" stop-opacity="0"/>
+										</radialGradient>
+										<!-- Screen inner content bg -->
+										<linearGradient id="h-scr-bg" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="#0c1628"/>
+											<stop offset="100%" stop-color="#060b18"/>
+										</linearGradient>
+										<!-- Truss metal bar -->
+										<linearGradient id="h-metal" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+											<stop offset="50%" stop-color="rgba(255,255,255,0.1)"/>
+											<stop offset="100%" stop-color="rgba(255,255,255,0.04)"/>
+										</linearGradient>
+										<!-- Truss columns -->
+										<linearGradient id="h-col" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="rgba(255,255,255,0.13)"/>
+											<stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
+										</linearGradient>
+										<!-- Beam white (from source to transparent) -->
+										<linearGradient id="h-bm-w" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
+											<stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+										</linearGradient>
+										<!-- Beam red -->
+										<linearGradient id="h-bm-r" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="#C8391C" stop-opacity="0.38"/>
+											<stop offset="100%" stop-color="#C8391C" stop-opacity="0"/>
+										</linearGradient>
+										<!-- Stage surface -->
+										<linearGradient id="h-stage" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="#1a0d0a"/>
+											<stop offset="100%" stop-color="#080808"/>
+										</linearGradient>
+										<!-- Stage front LED strip -->
+										<linearGradient id="h-led" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%"   stop-color="#C8391C" stop-opacity="0.7"/>
+											<stop offset="28%"  stop-color="#ff7a3d" stop-opacity="0.9"/>
+											<stop offset="55%"  stop-color="#ffffff" stop-opacity="0.85"/>
+											<stop offset="80%"  stop-color="#ff7a3d" stop-opacity="0.9"/>
+											<stop offset="100%" stop-color="#C8391C" stop-opacity="0.7"/>
+										</linearGradient>
+										<!-- Stage glow (warm uplight on crowd) -->
+										<radialGradient id="h-stage-glow" cx="50%" cy="0%" r="80%" gradientUnits="objectBoundingBox">
+											<stop offset="0%" stop-color="#C8391C" stop-opacity="0.35"/>
+											<stop offset="100%" stop-color="#C8391C" stop-opacity="0"/>
+										</radialGradient>
+										<!-- Speaker cabinet -->
+										<linearGradient id="h-spkr" x1="0" y1="0" x2="0" y2="1">
+											<stop offset="0%" stop-color="#111120"/>
+											<stop offset="100%" stop-color="#08080f"/>
+										</linearGradient>
+										<!-- LIVE badge -->
+										<linearGradient id="h-live" x1="0" y1="0" x2="1" y2="0">
+											<stop offset="0%" stop-color="#C8391C"/>
+											<stop offset="100%" stop-color="#9c1e08"/>
+										</linearGradient>
+										<!-- Fog -->
+										<radialGradient id="h-fog" cx="50%" cy="50%" r="50%" gradientUnits="objectBoundingBox">
+											<stop offset="0%" stop-color="#C8391C" stop-opacity="0.12"/>
+											<stop offset="50%" stop-color="#ffffff" stop-opacity="0.04"/>
+											<stop offset="100%" stop-color="transparent" stop-opacity="0"/>
+										</radialGradient>
+										<!-- Screen clip -->
+										<clipPath id="h-scr-clip">
+											<rect x="72" y="52" width="256" height="190" rx="3"/>
+										</clipPath>
+										<!-- Beam blur -->
+										<filter id="h-blur-beam" x="-25%" y="-5%" width="150%" height="110%">
+											<feGaussianBlur stdDeviation="7"/>
+										</filter>
+										<!-- Soft glow for lights/LEDs -->
+										<filter id="h-glow" x="-60%" y="-60%" width="220%" height="220%">
+											<feGaussianBlur stdDeviation="3" result="b"/>
+											<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+										</filter>
+										<!-- Screen bloom -->
+										<filter id="h-screen-bloom" x="-20%" y="-20%" width="140%" height="140%">
+											<feGaussianBlur stdDeviation="14"/>
+										</filter>
+									</defs>
+
+									<style>
+										/* Beams — 3 staggered groups */
+										.hb1{animation:hbeam 3s ease-in-out infinite;animation-delay:0s}
+										.hb2{animation:hbeam 3s ease-in-out infinite;animation-delay:1s}
+										.hb3{animation:hbeam 3s ease-in-out infinite;animation-delay:2s}
+										@keyframes hbeam{0%,100%{opacity:.12}50%{opacity:.3}}
+										/* Screen pulse */
+										.hscr{animation:hscr 3.5s ease-in-out infinite}
+										@keyframes hscr{0%,100%{opacity:.55}50%{opacity:1}}
+										/* LED strip chase */
+										.hled{animation:hled 2s ease-in-out infinite}
+										@keyframes hled{0%,100%{opacity:.65}50%{opacity:1}}
+										/* Stage fog breathe */
+										.hfog{animation:hfog 5s ease-in-out infinite}
+										@keyframes hfog{0%,100%{opacity:.5}50%{opacity:.85}}
+										/* Lamp flicker */
+										.hlamp{animation:hlamp 3s ease-in-out infinite}
+										.hlamp2{animation:hlamp 3s ease-in-out infinite;animation-delay:1.5s}
+										@keyframes hlamp{0%,100%{opacity:.95}40%{opacity:.4}55%{opacity:.75}}
+										/* LIVE dot blink */
+										.hlivdot{animation:hlivdot 1.2s ease-in-out infinite}
+										@keyframes hlivdot{0%,100%{opacity:1}50%{opacity:.2}}
+										/* Confetti fall */
+										.hcfa{animation:hcfa 3.1s linear infinite;animation-delay:-0.2s}
+										.hcfb{animation:hcfb 3.6s linear infinite;animation-delay:-1.4s}
+										.hcfc{animation:hcfc 2.9s linear infinite;animation-delay:-0.7s}
+										.hcfd{animation:hcfd 4s linear infinite;animation-delay:-2.1s}
+										.hcfe{animation:hcfe 3.3s linear infinite;animation-delay:-1.8s}
+										.hcff{animation:hcff 3.8s linear infinite;animation-delay:-0.9s}
+										.hcfg{animation:hcfg 2.7s linear infinite;animation-delay:-1.5s}
+										.hcfh{animation:hcfh 3.4s linear infinite;animation-delay:-2.6s}
+										@keyframes hcfa{0%{transform:translateY(0) rotate(0deg);opacity:.9}100%{transform:translateY(85px) rotate(175deg);opacity:0}}
+										@keyframes hcfb{0%{transform:translateY(0) rotate(25deg);opacity:.8}100%{transform:translateY(95px) rotate(225deg);opacity:0}}
+										@keyframes hcfc{0%{transform:translateY(0) rotate(-18deg);opacity:.75}100%{transform:translateY(78px) rotate(145deg);opacity:0}}
+										@keyframes hcfd{0%{transform:translateY(0) rotate(10deg);opacity:.9}100%{transform:translateY(100px) rotate(260deg);opacity:0}}
+										@keyframes hcfe{0%{transform:translateY(0) rotate(42deg);opacity:.85}100%{transform:translateY(88px) rotate(315deg);opacity:0}}
+										@keyframes hcff{0%{transform:translateY(0) rotate(-30deg);opacity:.7}100%{transform:translateY(80px) rotate(195deg);opacity:0}}
+										@keyframes hcfg{0%{transform:translateY(0) rotate(15deg);opacity:.9}100%{transform:translateY(92px) rotate(240deg);opacity:0}}
+										@keyframes hcfh{0%{transform:translateY(0) rotate(-8deg);opacity:.75}100%{transform:translateY(82px) rotate(185deg);opacity:0}}
+										/* Crowd sway */
+										.hcrowd{animation:hcrowd 3.5s ease-in-out infinite}
+										@keyframes hcrowd{0%,100%{transform:translateY(0)}40%{transform:translateY(-3px)}70%{transform:translateY(-1px)}}
+										/* Spark float */
+										.hsp{animation:hsp 3.5s ease-in-out infinite}
+										.hsp:nth-child(2){animation-delay:.6s}
+										.hsp:nth-child(3){animation-delay:1.2s}
+										.hsp:nth-child(4){animation-delay:1.8s}
+										@keyframes hsp{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:.85;transform:translateY(-10px)}}
+									</style>
+
+									<!-- ── BACKGROUND ── -->
+									<rect width="400" height="500" fill="url(#h-bg)"/>
+
+									<!-- ── SCREEN BLOOM (behind screen, blurred) ── -->
+									<ellipse class="hscr" cx="200" cy="148" rx="160" ry="115" fill="url(#h-scr-emit)" filter="url(#h-screen-bloom)"/>
+
+									<!-- ── TRUSS TOP BAR ── -->
+									<rect x="50" y="38" width="300" height="14" rx="2" fill="url(#h-metal)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+									<line x1="50" y1="45" x2="350" y2="45" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+									<!-- ── PAR CAN LIGHTS (7 fixtures on top truss) ── -->
+									<!-- Hanging rods -->
+									<line x1="85"  y1="38" x2="85"  y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="118" y1="38" x2="118" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="152" y1="38" x2="152" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="200" y1="38" x2="200" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="248" y1="38" x2="248" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="282" y1="38" x2="282" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<line x1="315" y1="38" x2="315" y2="50" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+									<!-- Fixture bodies -->
+									<rect x="79"  y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="112" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="146" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="194" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="242" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="276" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<rect x="309" y="49" width="12" height="9" rx="2" fill="#111128" stroke="rgba(255,255,255,0.2)" stroke-width="0.5"/>
+									<!-- Lamp apertures (glowing ellipses) -->
+									<ellipse class="hlamp"  cx="85"  cy="59" rx="6" ry="2.5" fill="#C8391C" opacity="0.85" filter="url(#h-glow)"/>
+									<ellipse class="hlamp2" cx="118" cy="59" rx="6" ry="2.5" fill="#ffffff" opacity="0.7"  filter="url(#h-glow)"/>
+									<ellipse class="hlamp"  cx="152" cy="59" rx="6" ry="2.5" fill="#C8391C" opacity="0.9"  filter="url(#h-glow)"/>
+									<ellipse class="hlamp2" cx="200" cy="59" rx="6" ry="2.5" fill="#ffffff" opacity="0.8"  filter="url(#h-glow)"/>
+									<ellipse class="hlamp"  cx="248" cy="59" rx="6" ry="2.5" fill="#C8391C" opacity="0.9"  filter="url(#h-glow)"/>
+									<ellipse class="hlamp2" cx="282" cy="59" rx="6" ry="2.5" fill="#ffffff" opacity="0.7"  filter="url(#h-glow)"/>
+									<ellipse class="hlamp"  cx="315" cy="59" rx="6" ry="2.5" fill="#C8391C" opacity="0.85" filter="url(#h-glow)"/>
+
+									<!-- ── LIGHT BEAMS (blurred cones from lamps down into crowd) ── -->
+									<g filter="url(#h-blur-beam)">
+										<polygon class="hb1" points="85,59  20,390  148,390" fill="url(#h-bm-r)"/>
+										<polygon class="hb2" points="118,59 40,390  190,390" fill="url(#h-bm-w)"/>
+										<polygon class="hb1" points="152,59 75,390  230,390" fill="url(#h-bm-r)"/>
+										<polygon class="hb3" points="200,59 95,390  305,390" fill="url(#h-bm-w)"/>
+										<polygon class="hb2" points="248,59 170,390 325,390" fill="url(#h-bm-r)"/>
+										<polygon class="hb3" points="282,59 210,390 360,390" fill="url(#h-bm-w)"/>
+										<polygon class="hb1" points="315,59 252,390 380,390" fill="url(#h-bm-r)"/>
+									</g>
+
+									<!-- ── TRUSS COLUMNS (left & right) ── -->
+									<!-- Left column: x=52–68, y=52–248 -->
+									<rect x="52" y="52" width="16" height="196" rx="1" fill="url(#h-col)"/>
+									<line x1="52" y1="52"  x2="68" y2="92"  stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="68" y1="52"  x2="52" y2="92"  stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="52" y1="92"  x2="68" y2="132" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="68" y1="92"  x2="52" y2="132" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="52" y1="132" x2="68" y2="172" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="68" y1="132" x2="52" y2="172" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="52" y1="172" x2="68" y2="212" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="68" y1="172" x2="52" y2="212" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<!-- Right column: x=332–348 -->
+									<rect x="332" y="52" width="16" height="196" rx="1" fill="url(#h-col)"/>
+									<line x1="332" y1="52"  x2="348" y2="92"  stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="348" y1="52"  x2="332" y2="92"  stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="332" y1="92"  x2="348" y2="132" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="348" y1="92"  x2="332" y2="132" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="332" y1="132" x2="348" y2="172" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="348" y1="132" x2="332" y2="172" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="332" y1="172" x2="348" y2="212" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+									<line x1="348" y1="172" x2="332" y2="212" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+
+									<!-- ── SPEAKER STACKS (outside columns) ── -->
+									<rect x="17" y="160" width="32" height="120" rx="3" fill="url(#h-spkr)" stroke="rgba(255,255,255,0.07)" stroke-width="0.8"/>
+									<circle cx="33" cy="184" r="11" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+									<circle cx="33" cy="184" r="5"  fill="rgba(255,255,255,0.04)"/>
+									<circle cx="33" cy="208" r="9"  fill="none" stroke="rgba(255,255,255,0.1)"  stroke-width="1"/>
+									<circle cx="33" cy="208" r="4"  fill="rgba(255,255,255,0.04)"/>
+									<circle cx="33" cy="228" r="7"  fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+									<circle cx="33" cy="246" r="5"  fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+									<rect x="351" y="160" width="32" height="120" rx="3" fill="url(#h-spkr)" stroke="rgba(255,255,255,0.07)" stroke-width="0.8"/>
+									<circle cx="367" cy="184" r="11" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+									<circle cx="367" cy="184" r="5"  fill="rgba(255,255,255,0.04)"/>
+									<circle cx="367" cy="208" r="9"  fill="none" stroke="rgba(255,255,255,0.1)"  stroke-width="1"/>
+									<circle cx="367" cy="208" r="4"  fill="rgba(255,255,255,0.04)"/>
+									<circle cx="367" cy="228" r="7"  fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+									<circle cx="367" cy="246" r="5"  fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+									<!-- ── MAIN LED BACKDROP SCREEN ── -->
+									<rect x="72" y="52" width="256" height="190" rx="3" fill="url(#h-scr-bg)"/>
+									<g clip-path="url(#h-scr-clip)">
+										<!-- Concentric rings (brand mark) -->
+										<circle cx="200" cy="147" r="78" fill="none" stroke="rgba(200,57,28,0.18)" stroke-width="1"/>
+										<circle cx="200" cy="147" r="58" fill="none" stroke="rgba(200,57,28,0.25)" stroke-width="1"/>
+										<circle cx="200" cy="147" r="38" fill="none" stroke="rgba(200,57,28,0.35)" stroke-width="1.5"/>
+										<circle cx="200" cy="147" r="18" fill="rgba(200,57,28,0.14)"/>
+										<circle cx="200" cy="147" r="7"  fill="rgba(255,255,255,0.18)"/>
+										<!-- Brand text -->
+										<text x="200" y="153" text-anchor="middle" font-family="'Bebas Neue','Impact',sans-serif" font-size="20" letter-spacing="7" fill="rgba(255,255,255,0.12)">REDLINE</text>
+										<!-- Screen EQ bars (left cluster) -->
+										<rect x="82"  y="218" width="7" height="16" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<rect x="94"  y="210" width="7" height="24" rx="2" fill="rgba(255,255,255,0.28)"/>
+										<rect x="106" y="215" width="7" height="19" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<rect x="118" y="206" width="7" height="28" rx="2" fill="rgba(255,255,255,0.28)"/>
+										<rect x="130" y="212" width="7" height="22" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<!-- Screen EQ bars (right cluster) -->
+										<rect x="263" y="216" width="7" height="18" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<rect x="275" y="209" width="7" height="25" rx="2" fill="rgba(255,255,255,0.28)"/>
+										<rect x="287" y="213" width="7" height="21" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<rect x="299" y="207" width="7" height="27" rx="2" fill="rgba(255,255,255,0.28)"/>
+										<rect x="311" y="214" width="7" height="20" rx="2" fill="rgba(200,57,28,0.5)"/>
+										<!-- Wave path at bottom -->
+										<path d="M72,228 Q90,218 112,226 Q134,234 156,222 Q178,210 200,220 Q222,230 244,218 Q266,206 288,218 Q310,230 328,220 L328,242 L72,242 Z" fill="rgba(200,57,28,0.1)"/>
+										<!-- Status dot + indicator -->
+										<circle cx="84" cy="65" r="3" fill="#C8391C" opacity="0.8" filter="url(#h-glow)"/>
+										<circle cx="94" cy="65" r="3" fill="#22cc66" opacity="0.6"/>
+									</g>
+									<!-- Screen bezel -->
+									<rect x="72" y="52" width="256" height="190" rx="3" fill="none" stroke="rgba(200,57,28,0.32)" stroke-width="1.5"/>
+									<!-- Screen bottom LED strip -->
+									<rect class="hled" x="72" y="240" width="256" height="4" rx="2" fill="url(#h-led)"/>
+
+									<!-- ── STAGE PLATFORM ── -->
+									<!-- Surface (trapezoid) -->
+									<polygon points="38,248 362,248 350,268 50,268" fill="url(#h-stage)"/>
+									<line x1="38" y1="248" x2="362" y2="248" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+									<!-- Stage front face -->
+									<rect x="50" y="268" width="300" height="15" rx="1" fill="#080810"/>
+									<line x1="50" y1="272" x2="350" y2="272" stroke="rgba(200,57,28,0.25)" stroke-width="0.5"/>
+									<!-- Front LED strip -->
+									<rect class="hled" x="50" y="281" width="300" height="4" rx="2" fill="url(#h-led)" opacity="0.9"/>
+
+									<!-- Stage mic stands -->
+									<line x1="153" y1="248" x2="153" y2="215" stroke="rgba(255,255,255,0.28)" stroke-width="1.5"/>
+									<line x1="145" y1="248" x2="161" y2="248" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+									<ellipse cx="153" cy="212" rx="5" ry="6" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+									<line x1="247" y1="248" x2="247" y2="215" stroke="rgba(255,255,255,0.28)" stroke-width="1.5"/>
+									<line x1="239" y1="248" x2="255" y2="248" stroke="rgba(255,255,255,0.22)" stroke-width="1"/>
+									<ellipse cx="247" cy="212" rx="5" ry="6" fill="rgba(255,255,255,0.22)" stroke="rgba(255,255,255,0.4)" stroke-width="0.8"/>
+									<!-- Center drum riser -->
+									<rect x="172" y="234" width="56" height="14" rx="2" fill="rgba(0,0,0,0.5)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+									<!-- Floor wedge monitors -->
+									<polygon points="88,248 118,248 108,262 78,262"  fill="#0a0a16" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+									<polygon points="282,248 312,248 322,262 292,262" fill="#0a0a16" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+									<!-- ── STAGE FOG ── -->
+									<ellipse class="hfog" cx="200" cy="254" rx="180" ry="28" fill="url(#h-fog)" filter="url(#h-blur-beam)"/>
+
+									<!-- ── CROWD SILHOUETTES ── -->
+									<!-- Warm stage glow wash over crowd -->
+									<rect x="0" y="295" width="400" height="160" fill="url(#h-stage-glow)" opacity="0.4"/>
+
+									<!-- Row far (y≈300–330): small bumpy heads -->
+									<path d="M0,330 Q10,318 22,328 Q34,318 46,328 Q58,318 70,328 Q82,318 94,328 Q106,318 118,328 Q130,318 142,328 Q154,318 166,328 Q178,318 190,328 Q202,318 214,328 Q226,318 238,328 Q250,318 262,328 Q274,318 286,328 Q298,318 310,328 Q322,318 334,328 Q346,318 358,328 Q370,318 382,328 Q394,318 400,326 L400,345 L0,345 Z" fill="#0a0a18"/>
+
+									<!-- Row mid (y≈345–395): medium heads -->
+									<path d="M0,390 Q14,374 28,386 Q42,374 58,387 Q72,373 88,386 Q104,373 120,386 Q136,373 152,386 Q168,373 184,386 Q200,373 216,386 Q232,373 248,386 Q264,373 280,386 Q296,373 312,386 Q328,373 344,386 Q360,373 376,386 Q392,373 400,382 L400,410 L0,410 Z" fill="#090912"/>
+
+									<!-- Row near (y≈410–500): large heads + raised arms -->
+									<g class="hcrowd">
+										<path d="M0,458 Q18,438 36,455 Q54,438 72,455 Q90,438 108,455 Q126,438 144,455 Q162,438 180,455 Q198,438 216,455 Q234,438 252,455 Q270,438 288,455 Q306,438 324,455 Q342,438 360,455 Q378,438 396,455 Q400,450 400,458 L400,500 L0,500 Z" fill="#07070e"/>
+										<!-- Raised arms -->
+										<path d="M54,438 L50,412 L46,406 L52,410 L57,418 L58,438" fill="#07070e"/>
+										<path d="M122,438 L126,410 L130,404 L124,409 L119,418 L118,438" fill="#07070e"/>
+										<path d="M194,438 L190,408 L186,402 L192,407 L197,416 L197,438" fill="#07070e"/>
+										<path d="M210,438 L214,408 L218,402 L212,407 L207,416 L207,438" fill="#07070e"/>
+										<path d="M278,438 L274,412 L270,406 L276,410 L281,419 L282,438" fill="#07070e"/>
+										<path d="M346,438 L350,411 L354,405 L348,410 L343,419 L342,438" fill="#07070e"/>
+									</g>
+
+									<!-- ── CONFETTI (falling) ── -->
+									<rect class="hcfa" x="87"  y="72"  width="7"   height="3"   rx="1" fill="#C8391C"/>
+									<rect class="hcfb" x="152" y="60"  width="5.5" height="2.5" rx="1" fill="#ffffff" opacity="0.85"/>
+									<rect class="hcfc" x="222" y="68"  width="7"   height="3"   rx="1" fill="#ff8c4a"/>
+									<rect class="hcfd" x="292" y="65"  width="5.5" height="2.5" rx="1" fill="#C8391C"/>
+									<rect class="hcfe" x="120" y="83"  width="6"   height="3"   rx="1" fill="#ffffff" opacity="0.8"/>
+									<rect class="hcff" x="262" y="78"  width="4.5" height="4.5" rx="1" fill="#ffd060" opacity="0.8"/>
+									<rect class="hcfg" x="178" y="66"  width="8"   height="2.5" rx="1" fill="#C8391C"/>
+									<rect class="hcfh" x="332" y="76"  width="5.5" height="3"   rx="1" fill="#ffffff" opacity="0.75"/>
+
+									<!-- ── SPARKLES ── -->
+									<g>
+										<circle class="hsp" cx="62"  cy="115" r="1.5" fill="#C8391C" opacity="0.65"/>
+										<circle class="hsp" cx="344" cy="105" r="2"   fill="#ffffff"  opacity="0.5"/>
+										<circle class="hsp" cx="196" cy="44"  r="1.5" fill="#C8391C" opacity="0.7"/>
+										<circle class="hsp" cx="288" cy="128" r="1.5" fill="#ffffff"  opacity="0.45"/>
+									</g>
+
+									<!-- ── LIVE BADGE ── -->
+									<rect x="20" y="22" width="64" height="24" rx="12" fill="url(#h-live)" opacity="0.92"/>
+									<rect x="20" y="22" width="64" height="24" rx="12" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="0.8"/>
+									<circle class="hlivdot" cx="33" cy="34" r="4" fill="#ffffff"/>
+									<text x="52" y="39" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" font-weight="700" letter-spacing="1.5" fill="#ffffff">LIVE</text>
+
+									<!-- ── STATS BADGE ── -->
+									<rect x="300" y="22" width="80" height="24" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.14)" stroke-width="0.8"/>
+									<text x="340" y="38" text-anchor="middle" font-family="'Courier New',monospace" font-size="8.5" font-weight="600" letter-spacing="0.5" fill="rgba(255,255,255,0.55)">500+ Events</text>
+								</svg>
 							</div>
 
 							<!-- Bottom gradient overlay on card -->
@@ -370,13 +710,7 @@
 		);
 	}
 
-	/* ── Hero Character Illustration ── */
-	.hero-character {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		display: block;
-	}
+	/* ── Hero figure glow ── */
 	.figure-glow-red {
 		position: absolute;
 		left: -10%;
