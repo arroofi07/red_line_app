@@ -58,7 +58,7 @@
             icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`,
             title: 'Head Office',
             desc: 'Padang, Sumatera Barat',
-            link: '#',
+            link: 'https://www.google.com/maps?q=-0.9016313485700724,100.35053495646629',
             action: 'View on Map'
         }
     ];
@@ -136,7 +136,7 @@
 						</div>
 						<h3 class="ic-title">{info.title}</h3>
 						<p class="ic-desc">{info.desc}</p>
-						<a href={info.link} class="ic-link">{info.action} <span class="ic-arrow">→</span></a>
+						<a href={info.link} class="ic-link" target={info.link.startsWith('http') ? '_blank' : undefined} rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}>{info.action} <span class="ic-arrow">→</span></a>
 					</div>
 				{/each}
 			</div>
@@ -194,16 +194,34 @@
             </div>
 
             <div class="map-wrapper" class:visible={formVisible}>
+                <div class="map-location-badge">
+                    <div class="map-pin-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>
+                    </div>
+                    <div class="map-location-text">
+                        <span class="map-location-label">Head Office</span>
+                        <span class="map-location-addr">Jl. Prof. Dr. Hamka, Padang Utara, Sumatera Barat</span>
+                    </div>
+                    <a
+                        href="https://www.google.com/maps?q=-0.9016313485700724,100.35053495646629"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="map-open-btn"
+                        aria-label="Buka di Google Maps"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                        Buka Maps
+                    </a>
+                </div>
                 <div class="map-container glass">
-                    <!-- Placeholder or actual iframe map -->
-                    <iframe 
+                    <iframe
                         title="Redline Communication Office Map"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.2635974151786!2d100.38072041475354!3d-0.9080766993370356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2fd4ba2eb0bb6d6d%3A0xe54e2fe9a42be4aa!2sPadang%2C%20Kota%20Padang%2C%20Sumatera%20Barat!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-                        width="100%" 
-                        height="100%" 
-                        style="border:0;" 
-                        allowfullscreen={false} 
-                        loading="lazy" 
+                        src="https://maps.google.com/maps?q=-0.9016313485700724,100.35053495646629&z=17&output=embed"
+                        width="100%"
+                        height="100%"
+                        style="border:0;"
+                        allowfullscreen={false}
+                        loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade">
                     </iframe>
                 </div>
@@ -651,23 +669,90 @@
 
     .map-container {
         flex: 1;
-        min-height: 400px;
+        min-height: 380px;
         border-radius: 1.5rem;
         overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(220, 38, 38, 0.15);
         padding: 0.5rem;
         background: rgba(255,255,255,0.02);
+        box-shadow: 0 0 30px rgba(220, 38, 38, 0.06);
     }
     
     .map-container iframe {
         border-radius: 1rem;
-        filter: grayscale(100%) invert(92%) contrast(83%);
-        opacity: 0.8;
         transition: all 0.3s ease;
     }
-    .map-container:hover iframe {
-        filter: grayscale(80%) invert(90%) contrast(85%);
-        opacity: 0.9;
+
+    /* ── Map location badge ── */
+    .map-location-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.875rem 1.125rem;
+        margin-bottom: 0.75rem;
+        border-radius: 1rem;
+        background: rgba(220, 38, 38, 0.06);
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        flex-wrap: wrap;
+    }
+
+    .map-pin-icon {
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+    }
+
+    .map-location-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+        min-width: 0;
+    }
+
+    .map-location-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary);
+    }
+
+    .map-location-addr {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .map-open-btn {
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.45rem 0.875rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: white;
+        background: var(--primary);
+        text-decoration: none;
+        transition: all 0.2s ease;
+        box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+    }
+
+    .map-open-btn:hover {
+        background: oklch(0.6 0.22 25.26);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
     }
 
 	@keyframes pulse {

@@ -144,7 +144,7 @@
 							in:fly={{ y: 30, duration: 800, delay: 400 }}
 						>
 							<a
-								href="#contact"
+								href="/services-redline"
 								class="cta-btn group shadow-glow inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-[13px] font-bold text-white transition-all hover:scale-105 hover:bg-primary/90 sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
 							>
 								Explore Now
@@ -163,7 +163,7 @@
 										>Contact</span
 									>
 									<span class="text-[11px] font-medium text-white/40 sm:text-sm"
-										>+62 xxx-xxxx-xxxx</span
+										>+62 811 663 528</span
 									>
 								</div>
 							</div>
