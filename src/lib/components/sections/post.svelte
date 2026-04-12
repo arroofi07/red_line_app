@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getLatestBlogs, type Blog } from '$lib/firebase/blogs';
+	import { getLatestBlogs, getBlogs, type Blog } from '$lib/firebase/blogs';
+	import { getLandingEventIds } from '$lib/firebase/landing';
 
 	const fallbackPosts = [
 		{
@@ -57,6 +58,27 @@
 	let sectionEl: HTMLElement;
 	let hasEntered = $state(false);
 
+	function mapBlog(b: Blog) {
+		return {
+			id: b.id,
+			category: b.category,
+			tag: b.tag,
+			title: b.title,
+			excerpt: b.excerpt,
+			date: b.publishedAt?.seconds
+				? new Date(b.publishedAt.seconds * 1000).toLocaleDateString('id-ID', {
+						day: 'numeric',
+						month: 'short',
+						year: 'numeric'
+					})
+				: '',
+			readTime: b.readTime,
+			imageUrl: b.imageUrl,
+			author: b.author,
+			slug: b.slug
+		};
+	}
+
 	onMount(() => {
 		const obs = new IntersectionObserver(
 			(entries) => { if (entries[0].isIntersecting) hasEntered = true; },
@@ -64,26 +86,26 @@
 		);
 		if (sectionEl) obs.observe(sectionEl);
 
-		getLatestBlogs(4).then(latest => {
-			if (latest && latest.length > 0) {
-				posts = latest.map((b) => ({
-					id: b.id,
-					category: b.category,
-					tag: b.tag,
-					title: b.title,
-					excerpt: b.excerpt,
-					date: b.publishedAt?.seconds 
-						? new Date(b.publishedAt.seconds * 1000).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })
-						: '',
-					readTime: b.readTime,
-					imageUrl: b.imageUrl,
-					author: b.author,
-					slug: b.slug
-				}));
+		(async () => {
+			try {
+				const selectedIds = await getLandingEventIds('insight-posts');
+				if (selectedIds.length > 0) {
+					// Fetch semua blog lalu filter + urutkan sesuai pilihan admin
+					const all = await getBlogs();
+					const blogMap = new Map(all.map((b) => [b.id, b]));
+					const ordered = selectedIds
+						.map((id) => blogMap.get(id))
+						.filter(Boolean)
+						.map((b) => mapBlog(b!));
+					if (ordered.length > 0) { posts = ordered; return; }
+				}
+				// Fallback: 4 blog terbaru
+				const latest = await getLatestBlogs(4);
+				if (latest && latest.length > 0) posts = latest.map(mapBlog);
+			} catch (e) {
+				console.error('Failed to load insight posts', e);
 			}
-		}).catch(e => {
-			console.error('Failed to load recent blogs', e);
-		});
+		})();
 
 		return () => obs.disconnect();
 	});

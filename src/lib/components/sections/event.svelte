@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import {
 		bankNagari,
 		perdami,
@@ -7,13 +8,28 @@
 		politeknikAtiPadang,
 		aquaElectronic
 	} from '$lib/assets/event-page';
+	import { getLandingEventIds } from '$lib/firebase/landing';
+	import { getEvents } from '$lib/firebase/events';
 
 	let activeIndex = $state(0);
 	let startX = 0;
 	let isDragging = false;
 	let isAnimating = $state(false);
 
-	const projects = [
+	// Palet accent yang dirotasi jika tidak ada warna khusus
+	const ACCENTS = ['#E05C5C', '#C9A96E', '#6EA8C9', '#7CB88A', '#B87CB8'];
+
+	type Project = {
+		title: string;
+		subtitle: string;
+		category: string;
+		description: string;
+		image: string;
+		accent: string;
+		tag: string;
+	};
+
+	const staticProjects: Project[] = [
 		{
 			title: 'Dealer Gathering',
 			subtitle: 'Expo',
@@ -75,6 +91,40 @@
 			tag: '06'
 		}
 	];
+
+	let dynamicProjects = $state<Project[]>([]);
+	let loaded = $state(false);
+
+	let projects = $derived(loaded && dynamicProjects.length > 0 ? dynamicProjects : staticProjects);
+
+	onMount(async () => {
+		try {
+			const [selectedIds, allEvents] = await Promise.all([
+				getLandingEventIds('latest-events'),
+				getEvents()
+			]);
+			if (selectedIds.length > 0) {
+				const eventMap = new Map(allEvents.map((e) => [e.id, e]));
+				const ordered: Project[] = selectedIds
+					.map((id) => eventMap.get(id))
+					.filter(Boolean)
+					.map((e, i) => ({
+						title: e!.title,
+						subtitle: e!.subtitle || '',
+						category: e!.category || '',
+						description: e!.description || '',
+						image: e!.imageUrl,
+						accent: ACCENTS[i % ACCENTS.length],
+						tag: String(i + 1).padStart(2, '0')
+					}));
+				if (ordered.length > 0) dynamicProjects = ordered;
+			}
+		} catch {
+			// fallback ke staticProjects
+		} finally {
+			loaded = true;
+		}
+	});
 
 	function goTo(index: number) {
 		if (isAnimating || index === activeIndex) return;

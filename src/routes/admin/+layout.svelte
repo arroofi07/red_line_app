@@ -42,12 +42,24 @@
 		{ href: '/admin/blogs/create', label: 'Buat Blog Baru', icon: '✏️' },
 		{ href: '/admin/productions', label: 'Production', icon: '🎬' },
 		{ href: '/admin/events', label: 'Events', icon: '🎪' },
-		{ href: '/admin/services', label: 'Galeri layanan', icon: '🖼️' },
+		{ href: '/admin/services', label: 'Services', icon: '🖼️' },
 		{ href: '/admin/storage', label: 'Storage & Kuota', icon: '💾' },
 		{ href: '/', label: '← Kembali ke Site', icon: '🌐' }
 	];
 
+	const landingSubItems = [
+		{ href: '/admin/landing/event-gallery', label: 'Event Gallery', icon: '🖼️' },
+		{ href: '/admin/landing/latest-event', label: 'Latest Event', icon: '🎪' },
+		{ href: '/admin/landing/insight-posts', label: 'Insight & Post', icon: '📰' }
+	];
+
 	let currentPath = $derived(page.url.pathname);
+
+	// Auto-buka dropdown jika sedang di halaman landing
+	let landingOpen = $state(false);
+	$effect(() => {
+		if (currentPath.startsWith('/admin/landing')) landingOpen = true;
+	});
 </script>
 
 <svelte:head>
@@ -106,6 +118,36 @@
 
 			<nav class="admin-nav">
 				{#each navItems as item}
+					<!-- Sisipkan dropdown "Halaman Depan" sebelum Storage -->
+					{#if item.href === '/admin/storage'}
+						<div class="nav-group">
+							<button
+								type="button"
+								class="admin-nav-item nav-group-toggle"
+								class:active={currentPath.startsWith('/admin/landing')}
+								onclick={() => (landingOpen = !landingOpen)}
+							>
+								<span class="admin-nav-icon">🏠</span>
+								<span class="nav-group-label">Halaman Depan</span>
+								<span class="nav-chevron" class:open={landingOpen}>›</span>
+							</button>
+							{#if landingOpen}
+								<div class="nav-sub">
+									{#each landingSubItems as sub}
+										<a
+											href={sub.href}
+											class="admin-nav-item nav-sub-item"
+											class:active={currentPath.startsWith(sub.href)}
+										>
+											<span class="admin-nav-icon">{sub.icon}</span>
+											<span>{sub.label}</span>
+										</a>
+									{/each}
+								</div>
+							{/if}
+						</div>
+					{/if}
+
 					<a
 						href={item.href}
 						class="admin-nav-item"
@@ -284,8 +326,15 @@
 		box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
 	}
 	@keyframes pulse {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.6; transform: scale(1.3); }
+		0%,
+		100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.6;
+			transform: scale(1.3);
+		}
 	}
 
 	/* ── Admin Shell ── */
@@ -370,6 +419,45 @@
 		font-size: 1rem;
 		width: 20px;
 		text-align: center;
+	}
+
+	/* ── Dropdown "Halaman Depan" ── */
+	.nav-group {
+		display: flex;
+		flex-direction: column;
+	}
+	.nav-group-toggle {
+		width: 100%;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-family: inherit;
+		justify-content: flex-start;
+	}
+	.nav-group-label {
+		flex: 1;
+		text-align: left;
+	}
+	.nav-chevron {
+		font-size: 1rem;
+		color: rgba(255, 255, 255, 0.3);
+		transition: transform 0.25s;
+		display: inline-block;
+		line-height: 1;
+	}
+	.nav-chevron.open {
+		transform: rotate(90deg);
+	}
+	.nav-sub {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		padding-left: 0.75rem;
+		margin-top: 0.15rem;
+	}
+	.nav-sub-item {
+		padding: 0.5rem 0.75rem;
+		font-size: 0.825rem;
 	}
 	.admin-logout {
 		display: flex;

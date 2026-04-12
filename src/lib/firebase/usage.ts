@@ -32,7 +32,8 @@ const COLLECTIONS = [
 	{ name: 'blogs', displayName: 'Blog', icon: '📝' },
 	{ name: 'productions', displayName: 'Production', icon: '🎬' },
 	{ name: 'events', displayName: 'Events', icon: '🎪' },
-	{ name: 'service-images', displayName: 'Galeri Layanan', icon: '🖼️' }
+	{ name: 'service-images', displayName: 'Galeri Layanan', icon: '🖼️' },
+	{ name: 'gallery-items', displayName: 'Galeri Landing', icon: '🎨' }
 ];
 
 /**

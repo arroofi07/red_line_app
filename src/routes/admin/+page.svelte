@@ -4,6 +4,7 @@
 	import { getProductions } from '$lib/firebase/productions';
 	import { getEvents } from '$lib/firebase/events';
 	import { FEATURED_SERVICE_SLUGS, getServiceImages } from '$lib/firebase/services';
+	import { getGalleryItems } from '$lib/firebase/gallery';
 	import {
 		getFirestoreUsage,
 		formatBytes,
@@ -16,6 +17,7 @@
 	let totalProductions = $state(0);
 	let totalEvents = $state(0);
 	let serviceGalleryPhotos = $state(0);
+	let landingGalleryPhotos = $state(0);
 	let loading = $state(true);
 	let error = $state('');
 
@@ -25,15 +27,17 @@
 
 	onMount(async () => {
 		try {
-			const [blogsData, prods, evts, ...galleries] = await Promise.all([
+			const [blogsData, prods, evts, landingGallery, ...galleries] = await Promise.all([
 				getBlogs(),
 				getProductions(),
 				getEvents(),
+				getGalleryItems(),
 				...FEATURED_SERVICE_SLUGS.map((slug) => getServiceImages(slug))
 			]);
 			blogs = blogsData;
 			totalProductions = prods.length;
 			totalEvents = evts.length;
+			landingGalleryPhotos = landingGallery.length;
 			serviceGalleryPhotos = galleries.reduce((sum, imgs) => sum + imgs.length, 0);
 		} catch (e) {
 			error = 'Gagal memuat data.';
@@ -122,6 +126,13 @@
 			<div class="stat-body">
 				<div class="stat-value">{serviceGalleryPhotos}</div>
 				<div class="stat-label">Foto galeri layanan</div>
+			</div>
+		</div>
+		<div class="stat-card">
+			<div class="stat-icon">🎨</div>
+			<div class="stat-body">
+				<div class="stat-value">{landingGalleryPhotos}</div>
+				<div class="stat-label">Galeri landing page</div>
 			</div>
 		</div>
 	</div>
