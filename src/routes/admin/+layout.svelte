@@ -43,6 +43,7 @@
 		{ href: '/admin/productions', label: 'Production', icon: '🎬' },
 		{ href: '/admin/events', label: 'Events', icon: '🎪' },
 		{ href: '/admin/services', label: 'Galeri layanan', icon: '🖼️' },
+		{ href: '/admin/storage', label: 'Storage & Kuota', icon: '💾' },
 		{ href: '/', label: '← Kembali ke Site', icon: '🌐' }
 	];
 

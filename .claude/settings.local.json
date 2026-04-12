@@ -3,7 +3,8 @@
     "allow": [
       "Bash(bun run:*)",
       "Bash(npx svelte-check:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }

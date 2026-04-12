@@ -4,6 +4,13 @@
 	import { getProductions } from '$lib/firebase/productions';
 	import { getEvents } from '$lib/firebase/events';
 	import { FEATURED_SERVICE_SLUGS, getServiceImages } from '$lib/firebase/services';
+	import {
+		getFirestoreUsage,
+		formatBytes,
+		usagePercent,
+		usageStatus,
+		SPARK_LIMITS
+	} from '$lib/firebase/usage';
 
 	let blogs = $state<Blog[]>([]);
 	let totalProductions = $state(0);
@@ -11,6 +18,10 @@
 	let serviceGalleryPhotos = $state(0);
 	let loading = $state(true);
 	let error = $state('');
+
+	// Storage mini widget
+	let storageBytes = $state(0);
+	let storageLoaded = $state(false);
 
 	onMount(async () => {
 		try {
@@ -29,11 +40,23 @@
 		} finally {
 			loading = false;
 		}
+
+		// Load storage info di background (non-blocking)
+		try {
+			const usage = await getFirestoreUsage();
+			storageBytes = usage.totalBytes;
+		} catch {
+			// abaikan jika gagal, tidak kritis untuk dashboard
+		} finally {
+			storageLoaded = true;
+		}
 	});
 
 	let totalBlogs = $derived(blogs.length);
 	let categories = $derived([...new Set(blogs.map((b) => b.category))]);
 	let latestBlog = $derived(blogs[0]);
+	let storagePct = $derived(usagePercent(storageBytes, SPARK_LIMITS.firestoreStorageBytes));
+	let storageStatusVal = $derived(usageStatus(storagePct));
 </script>
 
 <svelte:head>
@@ -102,6 +125,46 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Storage Mini Widget -->
+	<a href="/admin/storage" class="storage-widget" class:sw-warning={storageStatusVal === 'warning'} class:sw-danger={storageStatusVal === 'danger'}>
+		<div class="sw-left">
+			<span class="sw-icon">💾</span>
+			<div>
+				<div class="sw-title">Kapasitas Penyimpanan</div>
+				<div class="sw-sub">
+					{#if storageLoaded}
+						{formatBytes(storageBytes)} / {formatBytes(SPARK_LIMITS.firestoreStorageBytes)}
+						{#if storageStatusVal === 'danger'}
+							<span class="sw-badge sw-badge-danger">Kritis</span>
+						{:else if storageStatusVal === 'warning'}
+							<span class="sw-badge sw-badge-warning">Perlu Perhatian</span>
+						{:else}
+							<span class="sw-badge sw-badge-safe">Aman</span>
+						{/if}
+					{:else}
+						Memuat...
+					{/if}
+				</div>
+			</div>
+		</div>
+		<div class="sw-right">
+			{#if storageLoaded}
+				<div class="sw-pct" class:sw-pct-warn={storageStatusVal === 'warning'} class:sw-pct-danger={storageStatusVal === 'danger'}>
+					{storagePct.toFixed(1)}%
+				</div>
+			{/if}
+			<div class="sw-progress-track">
+				<div
+					class="sw-progress-fill"
+					class:sw-fill-warn={storageStatusVal === 'warning'}
+					class:sw-fill-danger={storageStatusVal === 'danger'}
+					style="width: {storageLoaded ? storagePct : 0}%"
+				></div>
+			</div>
+			<div class="sw-link-hint">Lihat Detail →</div>
+		</div>
+	</a>
 
 	<!-- Recent Posts -->
 	<div class="section-card">
@@ -329,4 +392,106 @@
 	}
 	.empty-state.error { color: #f87171; }
 	.link { color: #f87171; }
+
+	/* Storage Widget */
+	.storage-widget {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem 1.5rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1rem;
+		text-decoration: none;
+		transition: all 0.2s;
+		flex-wrap: wrap;
+	}
+	.storage-widget:hover {
+		background: rgba(255, 255, 255, 0.05);
+		border-color: rgba(255, 255, 255, 0.14);
+	}
+	.storage-widget.sw-warning {
+		border-color: rgba(245, 158, 11, 0.3);
+		background: rgba(245, 158, 11, 0.05);
+	}
+	.storage-widget.sw-danger {
+		border-color: rgba(220, 38, 38, 0.3);
+		background: rgba(220, 38, 38, 0.06);
+	}
+	.sw-left {
+		display: flex;
+		align-items: center;
+		gap: 0.875rem;
+	}
+	.sw-icon { font-size: 1.5rem; }
+	.sw-title {
+		font-size: 0.9rem;
+		font-weight: 700;
+		color: white;
+	}
+	.sw-sub {
+		font-size: 0.75rem;
+		color: rgba(255, 255, 255, 0.4);
+		margin-top: 2px;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+	.sw-badge {
+		padding: 0.1rem 0.5rem;
+		border-radius: 999px;
+		font-size: 0.65rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+	}
+	.sw-badge-safe {
+		background: rgba(34, 197, 94, 0.15);
+		color: #86efac;
+	}
+	.sw-badge-warning {
+		background: rgba(245, 158, 11, 0.15);
+		color: #fcd34d;
+	}
+	.sw-badge-danger {
+		background: rgba(220, 38, 38, 0.2);
+		color: #fca5a5;
+	}
+	.sw-right {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 0.3rem;
+		min-width: 120px;
+	}
+	.sw-pct {
+		font-family: 'Bebas Neue', sans-serif;
+		font-size: 1.3rem;
+		color: #22c55e;
+		line-height: 1;
+	}
+	.sw-pct.sw-pct-warn { color: #f59e0b; }
+	.sw-pct.sw-pct-danger { color: #dc2626; }
+	.sw-progress-track {
+		width: 120px;
+		height: 5px;
+		background: rgba(255, 255, 255, 0.07);
+		border-radius: 999px;
+		overflow: hidden;
+	}
+	.sw-progress-fill {
+		height: 100%;
+		border-radius: 999px;
+		background: #22c55e;
+		transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+		min-width: 2px;
+	}
+	.sw-progress-fill.sw-fill-warn { background: #f59e0b; }
+	.sw-progress-fill.sw-fill-danger { background: #dc2626; }
+	.sw-link-hint {
+		font-size: 0.7rem;
+		color: rgba(255, 255, 255, 0.25);
+	}
 </style>
