@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fly, fade } from 'svelte/transition';
 	import { Button } from '$lib/components/ui/button';
+	import heroImage from '$lib/assets/hero.png';
 
 	let mounted = $state(false);
 	let rotation = $state(0);
@@ -45,7 +46,7 @@
 				<!-- LEFT: Text content -->
 				{#if mounted}
 					<div
-						class="mt-4 flex flex-col gap-4 sm:mt-0 sm:gap-6"
+						class="mt-4 flex flex-col items-center gap-4 text-center sm:mt-0 sm:items-start sm:gap-6 sm:text-left"
 						in:fly={{ y: 60, duration: 900, delay: 100 }}
 					>
 						<!-- Badge pill -->
@@ -60,16 +61,14 @@
 						</div>
 
 						<!-- Main heading -->
-						<h1
-							class="hero-heading font-display leading-[0.92] tracking-tight text-white uppercase"
-						>
-							<span class="block"> EVENT ORGANIZER & </span>
-							<span class="block text-primary italic">STRATEGIC</span>
-							<span class="block">COMMUNICATION</span>
+						<h1 class="hero-heading text-white uppercase">
+							<span class="hero-line hero-line-main block">PROFESSIONAL EVENT ORGANIZER &</span>
+							<span class="hero-line hero-line-accent block text-primary italic">MICE MANAGEMENT</span>
+							<span class="hero-line hero-line-sub block">INTEGRATED BRAND ACTIVATION, VENDOR PRODUCTION</span>
 						</h1>
 
 						<!-- Decorative arrow + description -->
-						<div class="flex items-start gap-4 pt-2">
+						<div class="flex items-start justify-center gap-4 pt-2 sm:justify-start">
 							<div class="scribble-arrow mt-1 hidden flex-shrink-0 sm:flex">
 								<svg
 									width="80"
@@ -98,14 +97,13 @@
 									/>
 								</svg>
 							</div>
-							<div class="desc-wrapper w-full max-w-md" class:expanded={descExpanded}>
+							<div class="desc-wrapper w-full max-w-md text-center sm:text-left" class:expanded={descExpanded}>
 								<p class="desc-text text-base leading-relaxed text-white/50 md:text-lg">
-									Redline Communication (EO Padang) – one stop solution untuk semua kebutuhan event
-									anda dari event organizer, event management, product launching, event production,
-									rental event equipment , MICE ( meeting, exhibition,conference,exhibition ) dll.
-									Berpusat di kota Padang tetapi kami dapat juga membantu anda melaksanakan event di
-									kota – kota lain selain Padang seperti pekanbaru,jambi,medan.
-									Lampung,palembang,surabaya , jogja maupun Jakarta.
+									Lebih dari sekadar penyelenggara event
+									kami adalah strategic partner yang memastikan setiap detail dirancang dengan presisi, dieksekusi dengan standar tinggi, dan menghasilkan dampak yang nyata.
+									Dengan pengalaman lebih dari 20 tahun di industri event & branding, kami menghadirkan eksekusi yang tidak hanya rapi, tetapi juga berkelas dan berkesan.
+									From Concept to Execution — We Make It Happen.
+									Coverage Area : Sumatera , Jawa & bali
 								</p>
 								{#if !descExpanded}
 									<div class="desc-fade"></div>
@@ -139,7 +137,7 @@
 
 						<!-- CTA row -->
 						<div
-							class="flex flex-wrap items-center gap-3 pt-3 sm:gap-6 sm:pt-4"
+							class="flex flex-wrap items-center justify-center gap-3 pt-3 sm:justify-start sm:gap-6 sm:pt-4"
 							in:fly={{ y: 30, duration: 800, delay: 400 }}
 						>
 							<a
@@ -195,6 +193,11 @@
 								<div class="figure-glow-red-secondary"></div>
 
 								<!-- Hero Illustration: Concert Stage (Audience POV) -->
+								<img
+									src={heroImage}
+									alt="Event stage illustration"
+									class="absolute inset-0 z-10 h-full w-full object-cover"
+								/>
 								<svg
 									viewBox="0 0 400 500"
 									width="100%"
@@ -203,7 +206,7 @@
 									xmlns="http://www.w3.org/2000/svg"
 									aria-label="Concert Event Stage Illustration"
 									role="img"
-									class="absolute inset-0 z-10"
+									class="absolute inset-0 z-10 hidden"
 								>
 									<defs>
 										<!-- Deep background -->
@@ -662,8 +665,35 @@
 	/* ── Hero heading ── */
 	.hero-heading {
 		font-family: 'Bebas Neue', 'Impact', sans-serif;
-		font-size: clamp(2.2rem, 11vw, 7rem);
-		line-height: 0.93;
+		line-height: 0.92;
+		letter-spacing: 0.01em;
+		text-wrap: balance;
+	}
+	.hero-line {
+		max-width: 17ch;
+	}
+	.hero-line-main {
+		font-size: clamp(1.65rem, 6.2vw, 4.45rem);
+	}
+	.hero-line-accent {
+		font-size: clamp(1.85rem, 6.8vw, 5rem);
+	}
+	.hero-line-sub {
+		font-size: clamp(1.55rem, 5.7vw, 4.15rem);
+	}
+	@media (max-width: 639px) {
+		.hero-heading {
+			line-height: 0.96;
+		}
+		.hero-line {
+			max-width: 100%;
+			margin-inline: auto;
+		}
+	}
+	@media (min-width: 1024px) {
+		.hero-line {
+			max-width: 20ch;
+		}
 	}
 
 	/* ── Star icon inline ── */
